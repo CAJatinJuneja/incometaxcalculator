@@ -274,8 +274,8 @@
                             </select>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <input type="checkbox" id="useIndexation112" x-model="inputs.cg.ltcg112.useIndexedCost" @change="calculateAllTaxes" class="h-4 w-4 text-teal-600 border-stone-300 rounded focus:ring-teal-500">
-                            <label for="useIndexation112" class="text-xs">Apply Indexation (if applicable)</label>
+                            <input type="checkbox" id="useIndexation112" x-model="inputs.cg.ltcg112.useIndexedCost" @change="calculateAllTaxes" class="h-4 w-4 text-teal-600 border-stone-300 rounded focus:ring-teal-500" :disabled="!isIndexationAllowedForLTCG112()">
+                            <label for="useIndexation112" class="text-xs" :class="{'text-stone-400': !isIndexationAllowedForLTCG112()}">Apply Indexation (if applicable)</label>
                         </div>
                         <div><label class="text-xs mb-1 block">Indexed Cost of Acquisition (Calculated)</label><input type="number" :value="calculateIndexedCost(inputs.cg.ltcg112.cost, inputs.cg.ltcg112.dateAcquisition, inputs.cg.ltcg112.dateSale)" disabled class="w-full p-1 border rounded text-sm bg-stone-100"></div>
                         <p x-show="inputs.cg.ltcg112.useIndexedCost && inputs.cg.ltcg112.cost > 0 && inputs.cg.ltcg112.dateAcquisition && inputs.cg.ltcg112.dateSale" class="text-xs text-stone-500 mt-1">
@@ -284,7 +284,12 @@
                         <div><label class="text-xs mb-1 block">Capital Gain (₹)</label><input type="number" :value="calculateCG(inputs.cg.ltcg112, 'ltcg112').gain" disabled class="w-full p-1 border rounded text-sm bg-stone-100"></div>
                         <div><label class="text-xs mb-1 block">Exemption u/s 54/54EC/54F etc. (₹)</label><input type="number" x-model.number="inputs.cg.ltcg112.exemption54" @input="calculateAllTaxes" class="w-full p-1 border rounded text-sm"></div>
                         <div><label class="text-xs mb-1 block">Taxable Gain (₹)</label><input type="number" :value="calculateCG(inputs.cg.ltcg112, 'ltcg112').taxableGain" disabled class="w-full p-1 border rounded text-sm bg-stone-100"></div>
-                        <div class="info-icon text-xs text-stone-500">ℹ Capital Gain Tax After Reinstatement of Indexation Benefit for FY <span x-text="inputs.financialYear"></span>: <span class="info-tooltip">For LTCG u/s 112 from other assets, tax is 20% with indexation. For FY 2024-25, if sold on or after 23-Jul-2024, the rate is 12.5% on gains exceeding ₹1,25,000. For previous years, the rate is 10% on gains exceeding ₹1,00,000. For FY 2025-26, the rate is 12.5% on gains exceeding ₹1,25,000.</span></div>
+                        <div class="info-icon text-xs text-stone-500">ℹ LTCG Tax under section 112 for FY <span x-text="inputs.financialYear"></span>: <span class="info-tooltip">
+                            For FY 2024-25 and 2025-26, if sold on or after 23-Jul-2024:
+                            <br> - For Land & Building: Tax is 20% with indexation OR 12.5% without indexation, whichever is more beneficial.
+                            <br> - For Other assets (Debt MF, Gold etc.): Tax is 12.5% without indexation.
+                            <br> For Financial Years before 2024-25: Tax is 20% with indexation for all assets.
+                        </span></div>
                         <p x-show="checkHoldingPeriod(inputs.cg.ltcg112.dateAcquisition, inputs.cg.ltcg112.dateSale, 'other') === 'short'" class="text-red-500 text-xs mt-1">Warning: This asset appears to be Short-Term. Consider entering in STCG (Other) tab.</p>
                         <div class="info-icon text-xs text-stone-500 mt-1">ℹ Exemption u/s 54: <span class="info-tooltip">Reinvest capital gains from the sale of a residential property into another residential property or deposit in Capital Gains Account Scheme (CGAS) within the specified period to claim exemption under Section 54. This typically applies to LTCG from house property.</span></div>
                     </div>
@@ -571,6 +576,20 @@
                     return cost; // Fallback if CII not found
                 },
 
+                isIndexationAllowedForLTCG112() {
+                    const { financialYear, cg } = this.inputs;
+                    const saleDate = cg.ltcg112.dateSale ? new Date(cg.ltcg112.dateSale) : null;
+                    const july23_2024 = new Date('2024-07-23');
+
+                    if (financialYear === '2024-25' || financialYear === '2025-26') {
+                        if (saleDate && saleDate >= july23_2024) {
+                            return cg.ltcg112.assetType === 'land_building';
+                        }
+                    }
+                    // For FY before 2024-25 or sales before 23-Jul-2024, indexation is generally allowed for LTCG 112
+                    return true;
+                },
+
                 calculateCG(cgData, type) {
                     let netConsideration = (cgData.saleValue || 0) - (cgData.expenses || 0);
                     let cost = cgData.cost || 0;
@@ -591,8 +610,33 @@
                         taxableGain = Math.max(0, gain - exemption); // STCG generally no exemptions like 54
                     } else if (type === 'ltcg112') {
                         let effectiveCost = cost;
-                        if (cgData.useIndexedCost) {
-                            effectiveCost = this.calculateIndexedCost(cost, cgData.dateAcquisition, cgData.dateSale);
+                        const saleDate112 = cgData.dateSale ? new Date(cgData.dateSale) : null; // Corrected variable name
+                        const july23_2024 = new Date('2024-07-23');
+
+                        if (this.inputs.financialYear === '2024-25' || this.inputs.financialYear === '2025-26') {
+                            if (saleDate112 && saleDate112 >= july23_2024) { // Corrected variable name
+                                if (cgData.assetType === 'land_building') {
+                                    // For land & building sold on/after 23-Jul-2024, user can choose indexed or non-indexed
+                                    // We will calculate both and take the beneficial one for tax calculation, but for gain display,
+                                    // we respect the checkbox for now. The tax calculation will handle the beneficial part.
+                                    if (cgData.useIndexedCost) {
+                                        effectiveCost = this.calculateIndexedCost(cost, cgData.dateAcquisition, cgData.dateSale);
+                                    }
+                                } else {
+                                    // For other assets sold on/after 23-Jul-2024, no indexation
+                                    effectiveCost = cost; // Force non-indexed cost
+                                    cgData.useIndexedCost = false; // Visually disable checkbox
+                                }
+                            } else {
+                                // Sales before 23-Jul-2024 in FY 2024-25/2025-26, indexation allowed
+                                if (cgData.useIndexedCost) {
+                                    effectiveCost = this.calculateIndexedCost(cost, cgData.dateAcquisition, cgData.dateSale);
+                                }
+                            }
+                        } else { // Financial Years before 2024-25, indexation generally allowed
+                            if (cgData.useIndexedCost) {
+                                effectiveCost = this.calculateIndexedCost(cost, cgData.dateAcquisition, cgData.dateSale);
+                            }
                         }
                         gain = netConsideration - effectiveCost;
                         taxableGain = Math.max(0, gain - exemption);
@@ -871,25 +915,52 @@
                     let taxOnLTCG112 = 0;
                     if (currentLTCG112_TaxableGain > 0) {
                         const saleDate112 = cg.ltcg112.dateSale ? new Date(cg.ltcg112.dateSale) : null;
-                        const acqDate112 = cg.ltcg112.dateAcquisition ? new Date(cg.ltcg112.dateAcquisition) : null;
-                        let rate112 = 0.20;
+                        const july23_2024 = new Date('2024-07-23');
 
-                        if (financialYear === '2024-25') {
-                            if (saleDate112 && saleDate112 >= new Date('2024-07-23')) {
-                                if (cg.ltcg112.assetType === 'land_building' && acqDate112 && acqDate112 <= new Date('2024-07-22')) {
-                                    rate112 = cg.ltcg112.useIndexedCost ? 0.20 : 0.125;
+                        let costForTaxCalculation = cg.ltcg112.cost;
+                        let rate112 = 0.20; // Default rate for old rules
+
+                        if (financialYear === '2024-25' || financialYear === '2025-26') {
+                            if (saleDate112 && saleDate112 >= july23_2024) { // Corrected variable name
+                                if (cg.ltcg112.assetType === 'land_building') {
+                                    // Option 1: 20% with indexation
+                                    const indexedCost = this.calculateIndexedCost(cg.ltcg112.cost, cg.ltcg112.dateAcquisition, cg.ltcg112.dateSale);
+                                    const gainIndexed = cg.ltcg112.saleValue - cg.ltcg112.expenses - indexedCost;
+                                    const taxIndexed = Math.max(0, gainIndexed) * 0.20;
+
+                                    // Option 2: 12.5% without indexation
+                                    const gainNonIndexed = cg.ltcg112.saleValue - cg.ltcg112.expenses - cg.ltcg112.cost;
+                                    const taxNonIndexed = Math.max(0, gainNonIndexed) * 0.125;
+
+                                    // Choose the beneficial one
+                                    if (taxIndexed < taxNonIndexed) {
+                                        taxOnLTCG112 = taxIndexed;
+                                        costForTaxCalculation = indexedCost; // Update cost for actual gain calculation
+                                    } else {
+                                        taxOnLTCG112 = taxNonIndexed;
+                                        costForTaxCalculation = cg.ltcg112.cost; // Update cost for actual gain calculation
+                                    }
                                 } else {
+                                    // Other assets sold on/after 23-Jul-2024: 12.5% without indexation
                                     rate112 = 0.125;
+                                    costForTaxCalculation = cg.ltcg112.cost; // No indexation
                                 }
                             } else {
+                                // Sales before 23-Jul-2024 in FY 2024-25/2025-26: 20% with indexation
                                 rate112 = 0.20;
+                                costForTaxCalculation = this.calculateIndexedCost(cg.ltcg112.cost, cg.ltcg112.dateAcquisition, cg.ltcg112.dateSale);
                             }
-                        } else if (financialYear === '2025-26') {
-                            rate112 = 0.125;
-                        } else {
+                        } else { // Financial Years before 2024-25: 20% with indexation
                             rate112 = 0.20;
+                            costForTaxCalculation = this.calculateIndexedCost(cg.ltcg112.cost, cg.ltcg112.dateAcquisition, cg.ltcg112.dateSale);
                         }
-                        taxOnLTCG112 = currentLTCG112_TaxableGain * rate112;
+                        
+                        // If not specifically handled by beneficial calculation above (i.e., for 'other' assets post 23-Jul-24 or old FYs),
+                        // calculate tax based on the determined rate and cost.
+                        if (taxOnLTCG112 === 0) { // Only if not already set by beneficial calculation
+                            const currentGain = (cg.ltcg112.saleValue || 0) - (cg.ltcg112.expenses || 0) - costForTaxCalculation;
+                            taxOnLTCG112 = Math.max(0, currentGain) * rate112;
+                        }
                     }
                     let taxOnLottery = lottery * 0.30;
 
@@ -1066,8 +1137,9 @@
                         cgIncome: initialLTCG112A_TaxableGain + initialSTCG111A_TaxableGain + initialLTCG112_TaxableGain + initialSTCGOther_TaxableGain, // Sum of initial for GTI display
                         totalInterestIncome: totalInterestIncome,
                         otherSourcesNormalIncome: otherSourcesNormalIncome,
+                        otherSourcesTotalIncome: otherSourcesNormalIncome + lottery, // Reverted to previous logic
                         taxOnLottery: taxOnLottery,
-                        grossTotalIncome: Math.round(grossTotalIncomeBeforeDeductions/10)*10,
+                        grossTotalIncome: Math.round(grossTotalIncomeBeforeDeductions/10)*10, // Reverted to previous logic
                         totalDeductionsVI_A,
                         totalTaxableIncome: Math.round(totalTaxableIncome/10)*10,
                         taxOnNormalIncome,
@@ -1154,24 +1226,48 @@
                     let taxOnLTCG112_thresh = 0;
                     if (initialLTCG112_TaxableGain > 0) {
                         const saleDate112 = this.inputs.cg.ltcg112.dateSale ? new Date(this.inputs.cg.ltcg112.dateSale) : null;
-                        const acqDate112 = this.inputs.cg.ltcg112.dateAcquisition ? new Date(this.inputs.cg.ltcg112.dateAcquisition) : null;
-                        let rate112 = 0.20;
-                        if (financialYear === '2024-25') {
-                            if (saleDate112 && saleDate112 >= new Date('2024-07-23')) {
-                                if (this.inputs.cg.ltcg112.assetType === 'land_building' && acqDate112 && acqDate112 <= new Date('2024-07-22')) {
-                                    rate112 = this.inputs.cg.ltcg112.useIndexedCost ? 0.20 : 0.125;
+                        const july23_2024 = new Date('2024-07-23');
+
+                        let costForTaxCalculation = this.inputs.cg.ltcg112.cost;
+                        let rate112 = 0.20; // Default rate for old rules
+
+                        if (financialYear === '2024-25' || financialYear === '2025-26') {
+                            if (saleDate112 && saleDate112 >= july23_2024) { // Corrected variable name
+                                if (this.inputs.cg.ltcg112.assetType === 'land_building') {
+                                    // Option 1: 20% with indexation
+                                    const indexedCost = this.calculateIndexedCost(this.inputs.cg.ltcg112.cost, this.inputs.cg.ltcg112.dateAcquisition, this.inputs.cg.ltcg112.dateSale);
+                                    const gainIndexed = this.inputs.cg.ltcg112.saleValue - this.inputs.cg.ltcg112.expenses - indexedCost;
+                                    const taxIndexed = Math.max(0, gainIndexed) * 0.20;
+
+                                    // Option 2: 12.5% without indexation
+                                    const gainNonIndexed = this.inputs.cg.ltcg112.saleValue - this.inputs.cg.ltcg112.expenses - this.inputs.cg.ltcg112.cost;
+                                    const taxNonIndexed = Math.max(0, gainNonIndexed) * 0.125;
+
+                                    if (taxIndexed < taxNonIndexed) {
+                                        taxOnLTCG112_thresh = taxIndexed;
+                                    } else {
+                                        taxOnLTCG112_thresh = taxNonIndexed;
+                                    }
                                 } else {
+                                    // Other assets sold on/after 23-Jul-2024: 12.5% without indexation
                                     rate112 = 0.125;
+                                    costForTaxCalculation = this.inputs.cg.ltcg112.cost; // No indexation
+                                    const currentGain = (this.inputs.cg.ltcg112.saleValue || 0) - (this.inputs.cg.ltcg112.expenses || 0) - costForTaxCalculation;
+                                    taxOnLTCG112_thresh = Math.max(0, currentGain) * rate112;
                                 }
                             } else {
+                                // Sales before 23-Jul-2024 in FY 2024-25/2025-26: 20% with indexation
                                 rate112 = 0.20;
+                                costForTaxCalculation = this.calculateIndexedCost(this.inputs.cg.ltcg112.cost, this.inputs.cg.ltcg112.dateAcquisition, this.inputs.cg.ltcg112.dateSale);
+                                const currentGain = (this.inputs.cg.ltcg112.saleValue || 0) - (this.inputs.cg.ltcg112.expenses || 0) - costForTaxCalculation;
+                                taxOnLTCG112_thresh = Math.max(0, currentGain) * rate112;
                             }
-                        } else if (financialYear === '2025-26') {
-                            rate112 = 0.125;
-                        } else {
+                        } else { // Financial Years before 2024-25: 20% with indexation
                             rate112 = 0.20;
+                            costForTaxCalculation = this.calculateIndexedCost(this.inputs.cg.ltcg112.cost, this.inputs.cg.ltcg112.dateAcquisition, this.inputs.cg.ltcg112.dateSale);
+                            const currentGain = (this.inputs.cg.ltcg112.saleValue || 0) - (this.inputs.cg.ltcg112.expenses || 0) - costForTaxCalculation;
+                            taxOnLTCG112_thresh = Math.max(0, currentGain) * rate112;
                         }
-                        taxOnLTCG112_thresh = initialLTCG112_TaxableGain * rate112;
                     }
                     let taxOnLottery_thresh = lottery * 0.30;
 
@@ -1207,6 +1303,10 @@
                     }
                     return { taxPlusSurcharge: totalTaxBeforeSurcharge + surcharge_thresh };
                 },
+
+                printSummary() {
+                    window.print();
+                }
             }));
         });
 

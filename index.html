@@ -103,19 +103,19 @@
                 <div x-show="open" x-cloak x-transition class="mt-4 space-y-4 border-t pt-4">
                     <p class="text-sm text-stone-600 mb-4">Enter details related to your salary income. This section helps calculate taxable salary after considering various exemptions and deductions specific to salary.</p>
                     <div>
-                        <label for="basicSalary" class="block text-sm font-medium text-stone-700">Basic Salary (₹)</label>
+                        <label for="basicSalary" class="block text-sm font-medium text-stone-700 mb-1">Basic Salary (₹)</label>
                         <input type="number" id="basicSalary" x-model.number="inputs.salary.basic" @input="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md">
                     </div>
                     
                     <div x-data="{ hraOpen: false }">
                         <button @click="hraOpen = !hraOpen" class="text-md font-medium text-teal-500 hover:text-teal-700 w-full text-left py-1">HRA Details <span x-text="hraOpen ? '▾' : '▸'"></span></button>
                         <div x-show="hraOpen" class="pl-4 mt-2 space-y-3 border-l-2 border-teal-200">
-                            <div><label class="block text-xs text-stone-600">Actual HRA Received (₹)</label><input type="number" x-model.number="inputs.salary.hra.actual" @input="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md text-sm"></div>
-                            <div><label class="block text-xs text-stone-600">Rent Paid (₹)</label><input type="number" x-model.number="inputs.salary.hra.rentPaid" @input="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md text-sm"></div>
-                            <div><label class="block text-xs text-stone-600">Basic Salary for HRA (Typically Basic + DA) (₹)</label><input type="number" x-model.number="inputs.salary.hra.basicForHRA" @input="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md text-sm"></div>
+                            <div><label class="block text-xs text-stone-600 mb-1">Actual HRA Received (₹)</label><input type="number" x-model.number="inputs.salary.hra.actual" @input="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md text-sm"></div>
+                            <div><label class="block text-xs text-stone-600 mb-1">Rent Paid (₹)</label><input type="number" x-model.number="inputs.salary.hra.rentPaid" @input="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md text-sm"></div>
+                            <div><label class="block text-xs text-stone-600 mb-1">Basic Salary for HRA (Typically Basic + DA) (₹)</label><input type="number" x-model.number="inputs.salary.hra.basicForHRA" @input="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md text-sm"></div>
                             <div>
-                                <label class="block text-xs text-stone-600">City Type</label>
-                                <select x-model="inputs.salary.hra.cityType" @change="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md text-sm">
+                                <label class="block text-xs text-stone-600 mb-1">City Type</label>
+                                <select x-model="inputs.salary.hra.cityType" @change="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md text-sm">
                                     <option value="metro">Metro</option>
                                     <option value="non-metro">Non-Metro</option>
                                 </select>
@@ -128,23 +128,23 @@
                     <div x-data="{ ltaOpen: false }">
                         <button @click="ltaOpen = !ltaOpen" class="text-md font-medium text-teal-500 hover:text-teal-700 w-full text-left py-1">LTA Details <span x-text="ltaOpen ? '▾' : '▸'"></span></button>
                         <div x-show="ltaOpen" class="pl-4 mt-2 space-y-3 border-l-2 border-teal-200">
-                            <div><label class="block text-xs text-stone-600">LTA Received (₹)</label><input type="number" x-model.number="inputs.salary.lta.received" @input="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md text-sm"></div>
-                            <div><label class="block text-xs text-stone-600">LTA Exemption Claimed (₹)</label><input type="number" x-model.number="inputs.salary.lta.exempt" @input="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md text-sm"></div>
+                            <div><label class="block text-xs text-stone-600 mb-1">LTA Received (₹)</label><input type="number" x-model.number="inputs.salary.lta.received" @input="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md text-sm"></div>
+                            <div><label class="block text-xs text-stone-600 mb-1">LTA Exemption Claimed (₹)</label><input type="number" x-model.number="inputs.salary.lta.exempt" @input="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md text-sm"></div>
                             <div class="info-icon text-xs text-stone-500">ℹ LTA Exemption: <span class="info-tooltip">LTA exemption is allowed only twice in a block of 4 years. Exemption cannot exceed the actual LTA received or actual eligible travel expenses.</span></div>
                         </div>
                     </div>
                     
                     <div> 
-                        <label class="block text-sm font-medium text-stone-700">Other Allowances</label>
-                        <div class="flex space-x-2 mt-2">
-                            <input type="text" x-model="inputs.salary.mainOtherAllowanceName" @input="calculateAllTaxes" placeholder="Allowance Name (e.g., DA, Internet)" class="w-1/2 p-2 border rounded text-sm">
-                            <input type="number" x-model.number="inputs.salary.mainOtherAllowanceAmount" @input="calculateAllTaxes" placeholder="Amount (₹)" class="w-1/2 p-2 border rounded text-sm">
+                        <label class="block text-sm font-medium text-stone-700 mb-1">Other Allowances</label>
+                        <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mt-2">
+                            <input type="text" x-model="inputs.salary.mainOtherAllowanceName" @input="calculateAllTaxes" placeholder="Allowance Name (e.g., DA, Internet)" class="w-full sm:w-1/2 p-2 border rounded text-sm">
+                            <input type="number" x-model.number="inputs.salary.mainOtherAllowanceAmount" @input="calculateAllTaxes" placeholder="Amount (₹)" class="w-full sm:w-1/2 p-2 border rounded text-sm">
                         </div>
                         <template x-for="(allowance, index) in inputs.salary.additionalAllowances" :key="index">
-                            <div class="flex space-x-2 mt-2">
-                                <input type="text" x-model="allowance.name" placeholder="Allowance Name" class="w-1/2 p-2 border rounded text-sm">
-                                <input type="number" x-model.number="allowance.amount" @input="calculateAllTaxes" placeholder="Amount (₹)" class="w-1/2 p-2 border rounded text-sm">
-                                <button @click="inputs.salary.additionalAllowances.splice(index, 1); calculateAllTaxes()" class="text-red-500 hover:text-red-700">×</button>
+                            <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mt-2">
+                                <input type="text" x-model="allowance.name" placeholder="Allowance Name" class="w-full sm:w-1/2 p-2 border rounded text-sm">
+                                <input type="number" x-model.number="allowance.amount" @input="calculateAllTaxes" placeholder="Amount (₹)" class="w-full sm:w-1/2 p-2 border rounded text-sm">
+                                <button @click="inputs.salary.additionalAllowances.splice(index, 1); calculateAllTaxes()" class="text-red-500 hover:text-red-700 text-sm">×</button>
                             </div>
                         </template>
                         <button @click="addOtherAllowance()" class="mt-2 text-teal-600 hover:text-teal-800 text-sm font-semibold">Add Other Allowance</button>
@@ -153,31 +153,31 @@
                     <div x-data="{ perqOpen: false }">
                         <button @click="perqOpen = !perqOpen" class="text-md font-medium text-teal-500 hover:text-teal-700 w-full text-left py-1">Perquisites Details <span x-text="perqOpen ? '▾' : '▸'"></span></button>
                         <div x-show="perqOpen" class="pl-4 mt-2 space-y-3 border-l-2 border-teal-200">
-                            <div><label class="block text-xs text-stone-600">ESOPs Taxable Value (₹)</label><input type="number" x-model.number="inputs.salary.perquisites.esop" @input="calculateAllTaxes" class="mt-1 w-full p-2 border rounded text-sm"></div>
-                            <div><label class="block text-xs text-stone-600">Meal Vouchers/Coupons Taxable Value (₹)</label><input type="number" x-model.number="inputs.salary.perquisites.meal" @input="calculateAllTaxes" class="mt-1 w-full p-2 border rounded text-sm"></div>
-                            <div><label class="block text-xs text-stone-600">Rent-Free Accommodation Taxable Value (₹)</label><input type="number" x-model.number="inputs.salary.perquisites.rfa" @input="calculateAllTaxes" class="mt-1 w-full p-2 border rounded text-sm"></div>
-                            <div><label class="block text-xs text-stone-600">Other Perquisites Taxable Value (₹)</label><input type="number" x-model.number="inputs.salary.perquisites.other" @input="calculateAllTaxes" class="mt-1 w-full p-2 border rounded text-sm"></div>
+                            <div><label class="block text-xs text-stone-600 mb-1">ESOPs Taxable Value (₹)</label><input type="number" x-model.number="inputs.salary.perquisites.esop" @input="calculateAllTaxes" class="w-full p-2 border rounded text-sm"></div>
+                            <div><label class="block text-xs text-stone-600 mb-1">Meal Vouchers/Coupons Taxable Value (₹)</label><input type="number" x-model.number="inputs.salary.perquisites.meal" @input="calculateAllTaxes" class="w-full p-2 border rounded text-sm"></div>
+                            <div><label class="block text-xs text-stone-600 mb-1">Rent-Free Accommodation Taxable Value (₹)</label><input type="number" x-model.number="inputs.salary.perquisites.rfa" @input="calculateAllTaxes" class="w-full p-2 border rounded text-sm"></div>
+                            <div><label class="block text-xs text-stone-600 mb-1">Other Perquisites Taxable Value (₹)</label><input type="number" x-model.number="inputs.salary.perquisites.other" @input="calculateAllTaxes" class="w-full p-2 border rounded text-sm"></div>
                             <div class="info-icon text-xs text-stone-500 mt-1">ℹ Perquisites: <span class="info-tooltip">Includes benefits like rent-free accommodation, company car, ESOPs, food coupons (exempt up to ₹50/meal or ₹50k/year for non-transferable vouchers). Taxable value depends on specific rules.</span></div>
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-stone-700">Section 10(14) Exempt Allowances (₹)</label>
-                        <input type="number" x-model.number="inputs.salary.exemptAllowances1014" @input="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md">
+                        <label class="block text-sm font-medium text-stone-700 mb-1">Section 10(14) Exempt Allowances (₹)</label>
+                        <input type="number" x-model.number="inputs.salary.exemptAllowances1014" @input="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md">
                         <div class="info-icon text-xs text-stone-500 mt-1">ℹ Section 10(14): <span class="info-tooltip">Allowances exempt under Section 10(14) may include children education allowance, hostel allowance, transport allowance (for specific cases), uniform allowance, etc., subject to prescribed limits and conditions. Exempt only if used for official purposes or as specified.</span></div>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-stone-700">Other Exemptions (Leave Salary, Gratuity etc.) (₹)</label>
-                        <input type="number" x-model.number="inputs.salary.otherExemptions" @input="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md">
+                        <label class="block text-sm font-medium text-stone-700 mb-1">Other Exemptions (Leave Salary, Gratuity etc.) (₹)</label>
+                        <input type="number" x-model.number="inputs.salary.otherExemptions" @input="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md">
                          <div class="info-icon text-xs text-stone-500 mt-1">ℹ Other Exemptions: <span class="info-tooltip">These are specific exemptions under the Income Tax Act for certain types of income like leave encashment on retirement, gratuity, commuted pension. Ensure you meet the conditions for claiming them.</span></div>
                     </div>
                     <div>
-                        <label for="professionalTax" class="block text-sm font-medium text-stone-700">Professional Tax (₹)</label>
-                        <input type="number" id="professionalTax" x-model.number="inputs.salary.professionalTax" @input="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md">
+                        <label for="professionalTax" class="block text-sm font-medium text-stone-700 mb-1">Professional Tax (₹)</label>
+                        <input type="number" id="professionalTax" x-model.number="inputs.salary.professionalTax" @input="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md">
                     </div>
                     <div>
-                        <label for="entertainmentAllowance" class="block text-sm font-medium text-stone-700">Entertainment Allowance (Govt. Employees Only) (₹)</label>
-                        <input type="number" id="entertainmentAllowance" x-model.number="inputs.salary.entertainmentAllowance" @input="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md">
+                        <label for="entertainmentAllowance" class="block text-sm font-medium text-stone-700 mb-1">Entertainment Allowance (Govt. Employees Only) (₹)</label>
+                        <input type="number" id="entertainmentAllowance" x-model.number="inputs.salary.entertainmentAllowance" @input="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md">
                     </div>
                 </div>
             </div>
@@ -190,23 +190,23 @@
                 <div x-show="open" x-cloak x-transition class="mt-4 space-y-4 border-t pt-4">
                     <p class="text-sm text-stone-600 mb-4">Provide details about your house property income, whether self-occupied or let-out. This helps in calculating net income or loss from house property.</p>
                      <div>
-                        <label class="block text-sm font-medium text-stone-700">Property Type</label>
-                        <select x-model="inputs.houseProperty.type" @change="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md">
+                        <label class="block text-sm font-medium text-stone-700 mb-1">Property Type</label>
+                        <select x-model="inputs.houseProperty.type" @change="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md">
                             <option value="self-occupied">Self-Occupied</option>
                             <option value="let-out">Let-Out</option>
                         </select>
                     </div>
                     <div x-show="inputs.houseProperty.type === 'let-out'">
-                        <label class="block text-sm font-medium text-stone-700">Gross Annual Value (Actual Rent Received/Receivable) (₹)</label>
-                        <input type="number" x-model.number="inputs.houseProperty.grossAnnualValue" @input="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md">
+                        <label class="block text-sm font-medium text-stone-700 mb-1">Gross Annual Value (Actual Rent Received/Receivable) (₹)</label>
+                        <input type="number" x-model.number="inputs.houseProperty.grossAnnualValue" @input="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-stone-700">Municipal Taxes Paid (₹)</label>
-                        <input type="number" x-model.number="inputs.houseProperty.municipalTaxes" @input="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md">
+                        <label class="block text-sm font-medium text-stone-700 mb-1">Municipal Taxes Paid (₹)</label>
+                        <input type="number" x-model.number="inputs.houseProperty.municipalTaxes" @input="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-stone-700">Interest on Housing Loan (₹)</label>
-                        <input type="number" x-model.number="inputs.houseProperty.interestOnLoan" @input="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md">
+                        <label class="block text-sm font-medium text-stone-700 mb-1">Interest on Housing Loan (₹)</label>
+                        <input type="number" x-model.number="inputs.houseProperty.interestOnLoan" @input="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md">
                         <div class="info-icon text-xs text-stone-500 mt-1">ℹ Interest Deduction: <span class="info-tooltip">New Regime: Max ₹2 lakh for self-occupied property. Old Regime: Up to ₹2 lakh deductible for self-occupied; full interest for let-out, with loss set-off against other income.</span></div>
                     </div>
                      <div class="info-icon text-xs text-stone-500 mt-1">ℹ Standard Deduction (House Property): <span class="info-tooltip">30% of Net Annual Value (Gross Annual Value - Municipal Taxes) is deductible under Section 24(a) for both self-occupied (if notional rent applicable) and let-out properties.</span></div>
@@ -220,55 +220,55 @@
                 </button>
                 <div x-show="open" x-cloak x-transition class="mt-4 border-t pt-4">
                     <p class="text-sm text-stone-600 mb-4">Input details of profits from selling capital assets. Different rules apply for short-term and long-term gains, and for different asset types.</p>
-                    <div class="mb-4 border-b border-stone-200">
-                        <nav class="-mb-px flex space-x-4" aria-label="Tabs">
-                            <button @click="activeTab = 'ltcg112a'" :class="{ 'active': activeTab === 'ltcg112a' }" class="tab-button whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300">LTCG 112A (Equity)</button>
-                            <button @click="activeTab = 'stcg111a'" :class="{ 'active': activeTab === 'stcg111a' }" class="tab-button whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300">STCG 111A (Equity)</button>
-                            <button @click="activeTab = 'ltcg112'" :class="{ 'active': activeTab === 'ltcg112' }" class="tab-button whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300">LTCG 112 (Other)</button>
-                            <button @click="activeTab = 'stcgOther'" :class="{ 'active': activeTab === 'stcgOther' }" class="tab-button whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300">STCG (Other)</button>
+                    <div class="mb-4 border-b border-stone-200 overflow-x-auto">
+                        <nav class="-mb-px flex space-x-2 sm:space-x-4" aria-label="Tabs">
+                            <button @click="activeTab = 'ltcg112a'" :class="{ 'active': activeTab === 'ltcg112a' }" class="tab-button whitespace-nowrap py-2 px-3 border-b-2 font-medium text-sm border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300">LTCG 112A (Equity)</button>
+                            <button @click="activeTab = 'stcg111a'" :class="{ 'active': activeTab === 'stcg111a' }" class="tab-button whitespace-nowrap py-2 px-3 border-b-2 font-medium text-sm border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300">STCG 111A (Equity)</button>
+                            <button @click="activeTab = 'ltcg112'" :class="{ 'active': activeTab === 'ltcg112' }" class="tab-button whitespace-nowrap py-2 px-3 border-b-2 font-medium text-sm border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300">LTCG 112 (Other)</button>
+                            <button @click="activeTab = 'stcgOther'" :class="{ 'active': activeTab === 'stcgOther' }" class="tab-button whitespace-nowrap py-2 px-3 border-b-2 font-medium text-sm border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300">STCG (Other)</button>
                         </nav>
                     </div>
 
                     <div x-show="activeTab === 'ltcg112a'" class="space-y-3">
                         <h4 class="font-semibold text-md text-stone-700">LTCG u/s 112A (Listed Equity Shares / Equity MF)</h4>
-                        <div><label class="text-xs">Full Value of Consideration (₹)</label><input type="number" x-model.number="inputs.cg.ltcg112a.saleValue" @input="calculateAllTaxes" class="mt-1 w-full p-1 border rounded text-sm"></div>
-                        <div><label class="text-xs">Expenses of Transfer (₹)</label><input type="number" x-model.number="inputs.cg.ltcg112a.expenses" @input="calculateAllTaxes" class="mt-1 w-full p-1 border rounded text-sm"></div>
-                        <div><label class="text-xs">Net Consideration (₹)</label><input type="number" :value="inputs.cg.ltcg112a.saleValue - inputs.cg.ltcg112a.expenses" disabled class="mt-1 w-full p-1 border rounded text-sm bg-stone-100"></div>
-                        <div><label class="text-xs">Cost of Acquisition (₹)</label><input type="number" x-model.number="inputs.cg.ltcg112a.cost" @input="calculateAllTaxes" class="mt-1 w-full p-1 border rounded text-sm"></div>
-                        <div><label class="text-xs">Date of Acquisition</label><input type="date" x-model="inputs.cg.ltcg112a.dateAcquisition" @input="calculateAllTaxes" class="mt-1 w-full p-1 border rounded text-sm"></div>
-                        <div><label class="text-xs">Date of Sale</label><input type="date" x-model="inputs.cg.ltcg112a.dateSale" @input="calculateAllTaxes" :min="getFinancialYearStartDate(inputs.financialYear)" :max="getFinancialYearEndDate(inputs.financialYear)" class="mt-1 w-full p-1 border rounded text-sm"></div>
-                        <div><label class="text-xs">FMV/SDV on 31-Jan-2018 (if acquired before 01-Feb-2018) (₹)</label><input type="number" x-model.number="inputs.cg.ltcg112a.fmvJan2018" @input="calculateAllTaxes" class="mt-1 w-full p-1 border rounded text-sm"></div>
-                        <div><label class="text-xs">Capital Gain (₹)</label><input type="number" :value="calculateCG(inputs.cg.ltcg112a, 'ltcg112a').gain" disabled class="mt-1 w-full p-1 border rounded text-sm bg-stone-100"></div>
-                        <div><label class="text-xs">Exemption u/s 54F etc. (₹)</label><input type="number" x-model.number="inputs.cg.ltcg112a.exemption54" @input="calculateAllTaxes" class="mt-1 w-full p-1 border rounded text-sm"></div>
-                        <div><label class="text-xs">Taxable Gain (₹)</label><input type="number" :value="calculateCG(inputs.cg.ltcg112a, 'ltcg112a').taxableGain" disabled class="mt-1 w-full p-1 border rounded text-sm bg-stone-100"></div>
+                        <div><label class="text-xs mb-1 block">Full Value of Consideration (₹)</label><input type="number" x-model.number="inputs.cg.ltcg112a.saleValue" @input="calculateAllTaxes" class="w-full p-1 border rounded text-sm"></div>
+                        <div><label class="text-xs mb-1 block">Expenses of Transfer (₹)</label><input type="number" x-model.number="inputs.cg.ltcg112a.expenses" @input="calculateAllTaxes" class="w-full p-1 border rounded text-sm"></div>
+                        <div><label class="text-xs mb-1 block">Net Consideration (₹)</label><input type="number" :value="inputs.cg.ltcg112a.saleValue - inputs.cg.ltcg112a.expenses" disabled class="w-full p-1 border rounded text-sm bg-stone-100"></div>
+                        <div><label class="text-xs mb-1 block">Cost of Acquisition (₹)</label><input type="number" x-model.number="inputs.cg.ltcg112a.cost" @input="calculateAllTaxes" class="w-full p-1 border rounded text-sm"></div>
+                        <div><label class="text-xs mb-1 block">Date of Acquisition</label><input type="date" x-model="inputs.cg.ltcg112a.dateAcquisition" @input="calculateAllTaxes" class="w-full p-1 border rounded text-sm"></div>
+                        <div><label class="text-xs mb-1 block">Date of Sale</label><input type="date" x-model="inputs.cg.ltcg112a.dateSale" @input="calculateAllTaxes" :min="getFinancialYearStartDate(inputs.financialYear)" :max="getFinancialYearEndDate(inputs.financialYear)" class="w-full p-1 border rounded text-sm"></div>
+                        <div><label class="text-xs mb-1 block">FMV/SDV on 31-Jan-2018 (if acquired before 01-Feb-2018) (₹)</label><input type="number" x-model.number="inputs.cg.ltcg112a.fmvJan2018" @input="calculateAllTaxes" class="w-full p-1 border rounded text-sm"></div>
+                        <div><label class="text-xs mb-1 block">Capital Gain (₹)</label><input type="number" :value="calculateCG(inputs.cg.ltcg112a, 'ltcg112a').gain" disabled class="w-full p-1 border rounded text-sm bg-stone-100"></div>
+                        <div><label class="text-xs mb-1 block">Exemption u/s 54F etc. (₹)</label><input type="number" x-model.number="inputs.cg.ltcg112a.exemption54" @input="calculateAllTaxes" class="w-full p-1 border rounded text-sm"></div>
+                        <div><label class="text-xs mb-1 block">Taxable Gain (₹)</label><input type="number" :value="calculateCG(inputs.cg.ltcg112a, 'ltcg112a').taxableGain" disabled class="w-full p-1 border rounded text-sm bg-stone-100"></div>
                         <div class="info-icon text-xs text-stone-500">ℹ LTCG Tax under section 112A for FY <span x-text="inputs.financialYear"></span>: <span class="info-tooltip">LTCG u/s 112A is taxed at 10% on gains exceeding ₹1,25,000. For FY 2024-25, if sold on or after 23-Jul-2024, the rate is 12.5% on gains exceeding ₹1,25,000. For previous years, the rate is 10% on gains exceeding ₹1,00,000. For FY 2025-26, the rate is 12.5% on gains exceeding ₹1,25,000.</span></div>
                         <div class="info-icon text-xs text-stone-500 mt-1">ℹ Exemption u/s 54F: <span class="info-tooltip">Exemption under Section 54F is available for LTCG from the sale of any long-term capital asset (other than a residential house) if the net consideration is reinvested in a new residential house property within a specified period. The exemption is proportionate to the investment.</span></div>
                         <p x-show="checkHoldingPeriod(inputs.cg.ltcg112a.dateAcquisition, inputs.cg.ltcg112a.dateSale, 'equity') === 'short'" class="text-red-500 text-xs mt-1">Warning: This asset appears to be Short-Term. Consider entering in STCG 111A tab.</p>
                     </div>
                     <div x-show="activeTab === 'stcg111a'" class="space-y-3">
                         <h4 class="font-semibold text-md text-stone-700">STCG u/s 111A (Listed Equity Shares / Equity MF with STT)</h4>
-                        <div><label class="text-xs">Full Value of Consideration (₹)</label><input type="number" x-model.number="inputs.cg.stcg111a.saleValue" @input="calculateAllTaxes" class="mt-1 w-full p-1 border rounded text-sm"></div>
-                        <div><label class="text-xs">Expenses of Transfer (₹)</label><input type="number" x-model.number="inputs.cg.stcg111a.expenses" @input="calculateAllTaxes" class="mt-1 w-full p-1 border rounded text-sm"></div>
-                        <div><label class="text-xs">Net Consideration (₹)</label><input type="number" :value="inputs.cg.stcg111a.saleValue - inputs.cg.stcg111a.expenses" disabled class="mt-1 w-full p-1 border rounded text-sm bg-stone-100"></div>
-                        <div><label class="text-xs">Cost of Acquisition (₹)</label><input type="number" x-model.number="inputs.cg.stcg111a.cost" @input="calculateAllTaxes" class="mt-1 w-full p-1 border rounded text-sm"></div>
-                        <div><label class="text-xs">Date of Acquisition</label><input type="date" x-model="inputs.cg.stcg111a.dateAcquisition" @input="calculateAllTaxes" class="mt-1 w-full p-1 border rounded text-sm"></div>
-                        <div><label class="text-xs">Date of Sale</label><input type="date" x-model="inputs.cg.stcg111a.dateSale" @input="calculateAllTaxes" :min="getFinancialYearStartDate(inputs.financialYear)" :max="getFinancialYearEndDate(inputs.financialYear)" class="mt-1 w-full p-1 border rounded text-sm"></div>
-                        <div><label class="text-xs">Capital Gain (₹)</label><input type="number" :value="calculateCG(inputs.cg.stcg111a, 'stcg111a').gain" disabled class="mt-1 w-full p-1 border rounded text-sm bg-stone-100"></div>
-                        <div><label class="text-xs">Taxable Gain (₹)</label><input type="number" :value="calculateCG(inputs.cg.stcg111a, 'stcg111a').taxableGain" disabled class="mt-1 w-full p-1 border rounded text-sm bg-stone-100"></div>
+                        <div><label class="text-xs mb-1 block">Full Value of Consideration (₹)</label><input type="number" x-model.number="inputs.cg.stcg111a.saleValue" @input="calculateAllTaxes" class="w-full p-1 border rounded text-sm"></div>
+                        <div><label class="text-xs mb-1 block">Expenses of Transfer (₹)</label><input type="number" x-model.number="inputs.cg.stcg111a.expenses" @input="calculateAllTaxes" class="w-full p-1 border rounded text-sm"></div>
+                        <div><label class="text-xs mb-1 block">Net Consideration (₹)</label><input type="number" :value="inputs.cg.stcg111a.saleValue - inputs.cg.stcg111a.expenses" disabled class="w-full p-1 border rounded text-sm bg-stone-100"></div>
+                        <div><label class="text-xs mb-1 block">Cost of Acquisition (₹)</label><input type="number" x-model.number="inputs.cg.stcg111a.cost" @input="calculateAllTaxes" class="w-full p-1 border rounded text-sm"></div>
+                        <div><label class="text-xs mb-1 block">Date of Acquisition</label><input type="date" x-model="inputs.cg.stcg111a.dateAcquisition" @input="calculateAllTaxes" class="w-full p-1 border rounded text-sm"></div>
+                        <div><label class="text-xs mb-1 block">Date of Sale</label><input type="date" x-model="inputs.cg.stcg111a.dateSale" @input="calculateAllTaxes" :min="getFinancialYearStartDate(inputs.financialYear)" :max="getFinancialYearEndDate(inputs.financialYear)" class="w-full p-1 border rounded text-sm"></div>
+                        <div><label class="text-xs mb-1 block">Capital Gain (₹)</label><input type="number" :value="calculateCG(inputs.cg.stcg111a, 'stcg111a').gain" disabled class="w-full p-1 border rounded text-sm bg-stone-100"></div>
+                        <div><label class="text-xs mb-1 block">Taxable Gain (₹)</label><input type="number" :value="calculateCG(inputs.cg.stcg111a, 'stcg111a').taxableGain" disabled class="w-full p-1 border rounded text-sm bg-stone-100"></div>
                         <div class="info-icon text-xs text-stone-500">ℹ STCG 111A for FY <span x-text="inputs.financialYear"></span>: <span class="info-tooltip">Tax: 15% (if sold before 23/7/24 for FY 2024-25, or for all sales in prior years) or 20% (if sold on/after 23/7/24 for FY 2024-25). For FY 2025-26, the rate is 20%. STT must be paid.</span></div>
                          <p x-show="checkHoldingPeriod(inputs.cg.stcg111a.dateAcquisition, inputs.cg.stcg111a.dateSale, 'equity') === 'long'" class="text-red-500 text-xs mt-1">Warning: This asset appears to be Long-Term. Consider entering in LTCG 112A tab.</p>
                     </div>
                     <div x-show="activeTab === 'ltcg112'" class="space-y-3">
                         <h4 class="font-semibold text-md text-stone-700">LTCG u/s 112 (Other Assets like Debt MF, Property, Gold)</h4>
-                        <div><label class="text-xs">Full Value of Consideration (₹)</label><input type="number" x-model.number="inputs.cg.ltcg112.saleValue" @input="calculateAllTaxes" class="mt-1 w-full p-1 border rounded text-sm"></div>
-                        <div><label class="text-xs">Expenses of Transfer (₹)</label><input type="number" x-model.number="inputs.cg.ltcg112.expenses" @input="calculateAllTaxes" class="mt-1 w-full p-1 border rounded text-sm"></div>
-                        <div><label class="text-xs">Net Consideration (₹)</label><input type="number" :value="inputs.cg.ltcg112.saleValue - inputs.cg.ltcg112.expenses" disabled class="mt-1 w-full p-1 border rounded text-sm bg-stone-100"></div>
-                        <div><label class="text-xs">Cost of Acquisition (₹)</label><input type="number" x-model.number="inputs.cg.ltcg112.cost" @input="calculateAllTaxes" class="mt-1 w-full p-1 border rounded text-sm"></div>
-                        <div><label class="text-xs">Date of Acquisition</label><input type="date" x-model="inputs.cg.ltcg112.dateAcquisition" @input="calculateAllTaxes" class="mt-1 w-full p-1 border rounded text-sm"></div>
-                        <div><label class="text-xs">Date of Sale</label><input type="date" x-model="inputs.cg.ltcg112.dateSale" @input="calculateAllTaxes" :min="getFinancialYearStartDate(inputs.financialYear)" :max="getFinancialYearEndDate(inputs.financialYear)" class="mt-1 w-full p-1 border rounded text-sm"></div>
+                        <div><label class="text-xs mb-1 block">Full Value of Consideration (₹)</label><input type="number" x-model.number="inputs.cg.ltcg112.saleValue" @input="calculateAllTaxes" class="w-full p-1 border rounded text-sm"></div>
+                        <div><label class="text-xs mb-1 block">Expenses of Transfer (₹)</label><input type="number" x-model.number="inputs.cg.ltcg112.expenses" @input="calculateAllTaxes" class="w-full p-1 border rounded text-sm"></div>
+                        <div><label class="text-xs mb-1 block">Net Consideration (₹)</label><input type="number" :value="inputs.cg.ltcg112.saleValue - inputs.cg.ltcg112.expenses" disabled class="w-full p-1 border rounded text-sm bg-stone-100"></div>
+                        <div><label class="text-xs mb-1 block">Cost of Acquisition (₹)</label><input type="number" x-model.number="inputs.cg.ltcg112.cost" @input="calculateAllTaxes" class="w-full p-1 border rounded text-sm"></div>
+                        <div><label class="text-xs mb-1 block">Date of Acquisition</label><input type="date" x-model="inputs.cg.ltcg112.dateAcquisition" @input="calculateAllTaxes" class="w-full p-1 border rounded text-sm"></div>
+                        <div><label class="text-xs mb-1 block">Date of Sale</label><input type="date" x-model="inputs.cg.ltcg112.dateSale" @input="calculateAllTaxes" :min="getFinancialYearStartDate(inputs.financialYear)" :max="getFinancialYearEndDate(inputs.financialYear)" class="w-full p-1 border rounded text-sm"></div>
                         <div>
-                            <label class="text-xs">Asset Type</label>
-                            <select x-model="inputs.cg.ltcg112.assetType" @change="calculateAllTaxes" class="mt-1 w-full p-1 border rounded text-sm">
+                            <label class="text-xs mb-1 block">Asset Type</label>
+                            <select x-model="inputs.cg.ltcg112.assetType" @change="calculateAllTaxes" class="w-full p-1 border rounded text-sm">
                                 <option value="other">Other (e.g., Debt MF, Gold)</option>
                                 <option value="land_building">Land & Building</option>
                             </select>
@@ -277,27 +277,27 @@
                             <input type="checkbox" id="useIndexation112" x-model="inputs.cg.ltcg112.useIndexedCost" @change="calculateAllTaxes" class="h-4 w-4 text-teal-600 border-stone-300 rounded focus:ring-teal-500">
                             <label for="useIndexation112" class="text-xs">Apply Indexation (if applicable)</label>
                         </div>
-                        <div><label class="text-xs">Indexed Cost of Acquisition (Calculated)</label><input type="number" :value="calculateIndexedCost(inputs.cg.ltcg112.cost, inputs.cg.ltcg112.dateAcquisition, inputs.cg.ltcg112.dateSale)" disabled class="mt-1 w-full p-1 border rounded text-sm bg-stone-100"></div>
+                        <div><label class="text-xs mb-1 block">Indexed Cost of Acquisition (Calculated)</label><input type="number" :value="calculateIndexedCost(inputs.cg.ltcg112.cost, inputs.cg.ltcg112.dateAcquisition, inputs.cg.ltcg112.dateSale)" disabled class="w-full p-1 border rounded text-sm bg-stone-100"></div>
                         <p x-show="inputs.cg.ltcg112.useIndexedCost && inputs.cg.ltcg112.cost > 0 && inputs.cg.ltcg112.dateAcquisition && inputs.cg.ltcg112.dateSale" class="text-xs text-stone-500 mt-1">
                             Calculation: {{ inputs.cg.ltcg112.cost }} * ({{ getCII(getFinancialYearFromDate(inputs.cg.ltcg112.dateSale)) }} / {{ getCII(getFinancialYearFromDate(inputs.cg.ltcg112.dateAcquisition)) }})
                         </p>
-                        <div><label class="text-xs">Capital Gain (₹)</label><input type="number" :value="calculateCG(inputs.cg.ltcg112, 'ltcg112').gain" disabled class="mt-1 w-full p-1 border rounded text-sm bg-stone-100"></div>
-                        <div><label class="text-xs">Exemption u/s 54/54EC/54F etc. (₹)</label><input type="number" x-model.number="inputs.cg.ltcg112.exemption54" @input="calculateAllTaxes" class="mt-1 w-full p-1 border rounded text-sm"></div>
-                        <div><label class="text-xs">Taxable Gain (₹)</label><input type="number" :value="calculateCG(inputs.cg.ltcg112, 'ltcg112').taxableGain" disabled class="mt-1 w-full p-1 border rounded text-sm bg-stone-100"></div>
+                        <div><label class="text-xs mb-1 block">Capital Gain (₹)</label><input type="number" :value="calculateCG(inputs.cg.ltcg112, 'ltcg112').gain" disabled class="w-full p-1 border rounded text-sm bg-stone-100"></div>
+                        <div><label class="text-xs mb-1 block">Exemption u/s 54/54EC/54F etc. (₹)</label><input type="number" x-model.number="inputs.cg.ltcg112.exemption54" @input="calculateAllTaxes" class="w-full p-1 border rounded text-sm"></div>
+                        <div><label class="text-xs mb-1 block">Taxable Gain (₹)</label><input type="number" :value="calculateCG(inputs.cg.ltcg112, 'ltcg112').taxableGain" disabled class="w-full p-1 border rounded text-sm bg-stone-100"></div>
                         <div class="info-icon text-xs text-stone-500">ℹ Capital Gain Tax After Reinstatement of Indexation Benefit for FY <span x-text="inputs.financialYear"></span>: <span class="info-tooltip">For LTCG u/s 112 from other assets, tax is 20% with indexation. For FY 2024-25, if sold on or after 23-Jul-2024, the rate is 12.5% on gains exceeding ₹1,25,000. For previous years, the rate is 10% on gains exceeding ₹1,00,000. For FY 2025-26, the rate is 12.5% on gains exceeding ₹1,25,000.</span></div>
                         <p x-show="checkHoldingPeriod(inputs.cg.ltcg112.dateAcquisition, inputs.cg.ltcg112.dateSale, 'other') === 'short'" class="text-red-500 text-xs mt-1">Warning: This asset appears to be Short-Term. Consider entering in STCG (Other) tab.</p>
                         <div class="info-icon text-xs text-stone-500 mt-1">ℹ Exemption u/s 54: <span class="info-tooltip">Reinvest capital gains from the sale of a residential property into another residential property or deposit in Capital Gains Account Scheme (CGAS) within the specified period to claim exemption under Section 54. This typically applies to LTCG from house property.</span></div>
                     </div>
                     <div x-show="activeTab === 'stcgOther'" class="space-y-3">
                         <h4 class="font-semibold text-md text-stone-700">STCG (Other Assets - Non-equity, Property etc.)</h4>
-                        <div><label class="text-xs">Full Value of Consideration (₹)</label><input type="number" x-model.number="inputs.cg.stcgOther.saleValue" @input="calculateAllTaxes" class="mt-1 w-full p-1 border rounded text-sm"></div>
-                        <div><label class="text-xs">Expenses of Transfer (₹)</label><input type="number" x-model.number="inputs.cg.stcgOther.expenses" @input="calculateAllTaxes" class="mt-1 w-full p-1 border rounded text-sm"></div>
-                        <div><label class="text-xs">Net Consideration (₹)</label><input type="number" :value="inputs.cg.stcgOther.saleValue - inputs.cg.stcgOther.expenses" disabled class="mt-1 w-full p-1 border rounded text-sm bg-stone-100"></div>
-                        <div><label class="text-xs">Cost of Acquisition (₹)</label><input type="number" x-model.number="inputs.cg.stcgOther.cost" @input="calculateAllTaxes" class="mt-1 w-full p-1 border rounded text-sm"></div>
-                        <div><label class="text-xs">Date of Acquisition</label><input type="date" x-model="inputs.cg.stcgOther.dateAcquisition" @input="calculateAllTaxes" class="mt-1 w-full p-1 border rounded text-sm"></div>
-                        <div><label class="text-xs">Date of Sale</label><input type="date" x-model="inputs.cg.stcgOther.dateSale" @input="calculateAllTaxes" :min="getFinancialYearStartDate(inputs.financialYear)" :max="getFinancialYearEndDate(inputs.financialYear)" class="mt-1 w-full p-1 border rounded text-sm"></div>
-                        <div><label class="text-xs">Capital Gain (₹)</label><input type="number" :value="calculateCG(inputs.cg.stcgOther, 'stcgOther').gain" disabled class="mt-1 w-full p-1 border rounded text-sm bg-stone-100"></div>
-                        <div><label class="text-xs">Taxable Gain (₹)</label><input type="number" :value="calculateCG(inputs.cg.stcgOther, 'stcgOther').taxableGain" disabled class="mt-1 w-full p-1 border rounded text-sm bg-stone-100"></div>
+                        <div><label class="text-xs mb-1 block">Full Value of Consideration (₹)</label><input type="number" x-model.number="inputs.cg.stcgOther.saleValue" @input="calculateAllTaxes" class="w-full p-1 border rounded text-sm"></div>
+                        <div><label class="text-xs mb-1 block">Expenses of Transfer (₹)</label><input type="number" x-model.number="inputs.cg.stcgOther.expenses" @input="calculateAllTaxes" class="w-full p-1 border rounded text-sm"></div>
+                        <div><label class="text-xs mb-1 block">Net Consideration (₹)</label><input type="number" :value="inputs.cg.stcgOther.saleValue - inputs.cg.stcgOther.expenses" disabled class="w-full p-1 border rounded text-sm bg-stone-100"></div>
+                        <div><label class="text-xs mb-1 block">Cost of Acquisition (₹)</label><input type="number" x-model.number="inputs.cg.stcgOther.cost" @input="calculateAllTaxes" class="w-full p-1 border rounded text-sm"></div>
+                        <div><label class="text-xs mb-1 block">Date of Acquisition</label><input type="date" x-model="inputs.cg.stcgOther.dateAcquisition" @input="calculateAllTaxes" class="w-full p-1 border rounded text-sm"></div>
+                        <div><label class="text-xs mb-1 block">Date of Sale</label><input type="date" x-model="inputs.cg.stcgOther.dateSale" @input="calculateAllTaxes" :min="getFinancialYearStartDate(inputs.financialYear)" :max="getFinancialYearEndDate(inputs.financialYear)" class="w-full p-1 border rounded text-sm"></div>
+                        <div><label class="text-xs mb-1 block">Capital Gain (₹)</label><input type="number" :value="calculateCG(inputs.cg.stcgOther, 'stcgOther').gain" disabled class="w-full p-1 border rounded text-sm bg-stone-100"></div>
+                        <div><label class="text-xs mb-1 block">Taxable Gain (₹)</label><input type="number" :value="calculateCG(inputs.cg.stcgOther, 'stcgOther').taxableGain" disabled class="w-full p-1 border rounded text-sm bg-stone-100"></div>
                         <div class="info-icon text-xs text-stone-500">ℹ STCG (Other): <span class="info-tooltip">Taxed at applicable income tax slab rates.</span></div>
                         <p x-show="checkHoldingPeriod(inputs.cg.stcgOther.dateAcquisition, inputs.cg.stcgOther.dateSale, 'other') === 'long'" class="text-red-500 text-xs mt-1">Warning: This asset appears to be Long-Term. Consider entering in LTCG 112 tab.</p>
                     </div>
@@ -312,29 +312,29 @@
                 <div x-show="open" x-cloak x-transition class="mt-4 space-y-4 border-t pt-4">
                      <p class="text-sm text-stone-600 mb-4">Include income that doesn't fall under salary, house property, or capital gains, such as interest, dividends, etc.</p>
                     <div>
-                        <label class="block text-sm font-medium text-stone-700">Interest from Savings Account (₹)</label>
-                        <input type="number" x-model.number="inputs.otherIncome.savingsInterest" @input="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md">
+                        <label class="block text-sm font-medium text-stone-700 mb-1">Interest from Savings Account (₹)</label>
+                        <input type="number" x-model.number="inputs.otherIncome.savingsInterest" @input="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-stone-700">Interest from Fixed Deposits (₹)</label>
-                        <input type="number" x-model.number="inputs.otherIncome.fdInterest" @input="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md">
+                        <label class="block text-sm font-medium text-stone-700 mb-1">Interest from Fixed Deposits (₹)</label>
+                        <input type="number" x-model.number="inputs.otherIncome.fdInterest" @input="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-stone-700">Other Interest Income (₹)</label>
-                        <input type="number" x-model.number="inputs.otherIncome.otherInterest" @input="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md">
+                        <label class="block text-sm font-medium text-stone-700 mb-1">Other Interest Income (₹)</label>
+                        <input type="number" x-model.number="inputs.otherIncome.otherInterest" @input="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-stone-700">Dividend Income (₹)</label>
-                        <input type="number" x-model.number="inputs.otherIncome.dividend" @input="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md">
+                        <label class="block text-sm font-medium text-stone-700 mb-1">Dividend Income (₹)</label>
+                        <input type="number" x-model.number="inputs.otherIncome.dividend" @input="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-stone-700">Lottery/Horse Racing/Online Gaming Winnings (₹)</label>
-                        <input type="number" x-model.number="inputs.otherIncome.lottery" @input="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md">
+                        <label class="block text-sm font-medium text-stone-700 mb-1">Lottery/Horse Racing/Online Gaming Winnings (₹)</label>
+                        <input type="number" x-model.number="inputs.otherIncome.lottery" @input="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md">
                         <div class="info-icon text-xs text-stone-500 mt-1">ℹ Special Rate Incomes: <span class="info-tooltip">Lottery, horse racing, and online gaming income taxed at 30% flat under Section 115BB. No deductions allowed.</span></div>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-stone-700">Any Other Income (₹)</label>
-                        <input type="number" x-model.number="inputs.otherIncome.misc" @input="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md">
+                        <label class="block text-sm font-medium text-stone-700 mb-1">Any Other Income (₹)</label>
+                        <input type="number" x-model.number="inputs.otherIncome.misc" @input="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md">
                     </div>
                 </div>
             </div>
@@ -363,12 +363,12 @@
                         </div>
                     </template>
                      <div class="mt-2 p-3 border border-stone-200 rounded-md bg-white">
-                        <label class="block text-sm font-medium text-stone-700">80CCD(1B) - NPS Self Contribution (₹) <span class="info-icon text-sm text-stone-500">ℹ<span class="info-tooltip">Additional deduction up to ₹50,000 for NPS self-contribution. Available in Old Regime.</span></span></label>
-                        <input type="number" x-model.number="inputs.deductions80CCD1B" @input="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md text-sm" max="50000">
+                        <label class="block text-sm font-medium text-stone-700 mb-1">80CCD(1B) - NPS Self Contribution (₹) <span class="info-icon text-sm text-stone-500">ℹ<span class="info-tooltip">Additional deduction up to ₹50,000 for NPS self-contribution. Available in Old Regime.</span></span></label>
+                        <input type="number" x-model.number="inputs.deductions80CCD1B" @input="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md text-sm" max="50000">
                     </div>
                     <div class="mt-2 p-3 border border-stone-200 rounded-md bg-white">
-                        <label class="block text-sm font-medium text-stone-700">80CCD(2) - Employer's NPS Contribution (₹) <span class="info-icon text-sm text-stone-500">ℹ<span class="info-tooltip">Deduction for employer's contribution to NPS. Allowed in both Old and New Regimes. Max 10% of salary (Basic+DA) for private, 14% for govt.</span></span></label>
-                        <input type="number" x-model.number="inputs.deductions80CCD2" @input="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md text-sm">
+                        <label class="block text-sm font-medium text-stone-700 mb-1">80CCD(2) - Employer's NPS Contribution (₹) <span class="info-icon text-sm text-stone-500">ℹ<span class="info-tooltip">Deduction for employer's contribution to NPS. Allowed in both Old and New Regimes. Max 10% of salary (Basic+DA) for private, 14% for govt.</span></span></label>
+                        <input type="number" x-model.number="inputs.deductions80CCD2" @input="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md text-sm">
                     </div>
                 </div>
             </div>
@@ -382,23 +382,23 @@
                     <p class="text-sm text-stone-600 mb-4">Enter any tax already paid via TDS or Advance Tax.</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-stone-700">TDS (Tax Deducted at Source)</label>
-                            <input type="number" x-model.number="inputs.taxPaid.tds.q1" @input="calculateAllTaxes" placeholder="Q1 (Apr-Jun)" class="mt-1 w-full p-2 border rounded text-sm">
-                            <input type="number" x-model.number="inputs.taxPaid.tds.q2" @input="calculateAllTaxes" placeholder="Q2 (Jul-Sep)" class="mt-1 w-full p-2 border rounded text-sm">
-                            <input type="number" x-model.number="inputs.taxPaid.tds.q3" @input="calculateAllTaxes" placeholder="Q3 (Oct-Dec)" class="mt-1 w-full p-2 border rounded text-sm">
-                            <input type="number" x-model.number="inputs.taxPaid.tds.q4" @input="calculateAllTaxes" placeholder="Q4 (Jan-Mar)" class="mt-1 w-full p-2 border rounded text-sm">
+                            <label class="block text-sm font-medium text-stone-700 mb-1">TDS (Tax Deducted at Source)</label>
+                            <input type="number" x-model.number="inputs.taxPaid.tds.q1" @input="calculateAllTaxes" placeholder="Q1 (Apr-Jun)" class="w-full p-2 border rounded text-sm mb-2">
+                            <input type="number" x-model.number="inputs.taxPaid.tds.q2" @input="calculateAllTaxes" placeholder="Q2 (Jul-Sep)" class="w-full p-2 border rounded text-sm mb-2">
+                            <input type="number" x-model.number="inputs.taxPaid.tds.q3" @input="calculateAllTaxes" placeholder="Q3 (Oct-Dec)" class="w-full p-2 border rounded text-sm mb-2">
+                            <input type="number" x-model.number="inputs.taxPaid.tds.q4" @input="calculateAllTaxes" placeholder="Q4 (Jan-Mar)" class="w-full p-2 border rounded text-sm">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-stone-700">Advance Tax Paid</label>
-                            <input type="number" x-model.number="inputs.taxPaid.advanceTax.q1" @input="calculateAllTaxes" placeholder="Q1 (by Jun 15)" class="mt-1 w-full p-2 border rounded text-sm">
-                            <input type="number" x-model.number="inputs.taxPaid.advanceTax.q2" @input="calculateAllTaxes" placeholder="Q2 (by Sep 15)" class="mt-1 w-full p-2 border rounded text-sm">
-                            <input type="number" x-model.number="inputs.taxPaid.advanceTax.q3" @input="calculateAllTaxes" placeholder="Q3 (by Dec 15)" class="mt-1 w-full p-2 border rounded text-sm">
-                            <input type="number" x-model.number="inputs.taxPaid.advanceTax.q4" @input="calculateAllTaxes" placeholder="Q4 (by Mar 15)" class="mt-1 w-full p-2 border rounded text-sm">
+                            <label class="block text-sm font-medium text-stone-700 mb-1">Advance Tax Paid</label>
+                            <input type="number" x-model.number="inputs.taxPaid.advanceTax.q1" @input="calculateAllTaxes" placeholder="Q1 (by Jun 15)" class="w-full p-2 border rounded text-sm mb-2">
+                            <input type="number" x-model.number="inputs.taxPaid.advanceTax.q2" @input="calculateAllTaxes" placeholder="Q2 (by Sep 15)" class="w-full p-2 border rounded text-sm mb-2">
+                            <input type="number" x-model.number="inputs.taxPaid.advanceTax.q3" @input="calculateAllTaxes" placeholder="Q3 (by Dec 15)" class="w-full p-2 border rounded text-sm mb-2">
+                            <input type="number" x-model.number="inputs.taxPaid.advanceTax.q4" @input="calculateAllTaxes" placeholder="Q4 (by Mar 15)" class="w-full p-2 border rounded text-sm">
                         </div>
                     </div>
                     <div class="mt-4">
-                        <label class="block text-sm font-medium text-stone-700">Date of Tax Payment / ITR Filing (for interest calculation)</label>
-                        <input type="date" x-model="inputs.taxPaid.paymentDate" @input="calculateAllTaxes" class="mt-1 w-full p-2 border border-stone-300 rounded-md">
+                        <label class="block text-sm font-medium text-stone-700 mb-1">Date of Tax Payment / ITR Filing (for interest calculation)</label>
+                        <input type="date" x-model="inputs.taxPaid.paymentDate" @input="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md">
                         <div class="info-icon text-xs text-stone-500 mt-1">
                             ℹ Date of Payment: 
                             <span class="info-tooltip">
@@ -581,7 +581,7 @@
                     if (type === 'ltcg112a') {
                         const acqDate = cgData.dateAcquisition ? new Date(cgData.dateAcquisition) : null;
                         if (acqDate && acqDate < new Date('2018-02-01') && (cgData.fmvJan2018 || 0) > 0) {
-                            cost = Math.max(cost, Math.min(netConsideration, cgData.fmvJan2018));
+                            cost = Math.max(0, Math.min(netConsideration, cgData.fmvJan2018)); // Cost cannot be negative
                         }
                         gain = netConsideration - cost;
                         taxableGain = Math.max(0, gain - exemption);
@@ -601,26 +601,6 @@
                 },
 
                 calculateAllTaxes() {
-                    // Sum all other allowances: primary and additional
-                    let totalOtherAllowances = (this.inputs.salary.mainOtherAllowanceAmount || 0);
-                    totalOtherAllowances += this.inputs.salary.additionalAllowances.reduce((sum, a) => sum + (a.amount || 0), 0);
-
-                    // Auto-populate 80TTA/80TTB based on age and interest income
-                    const savingsInterest = this.inputs.otherIncome.savingsInterest || 0;
-                    const fdInterest = this.inputs.otherIncome.fdInterest || 0;
-                    const totalInterestForTTB = savingsInterest + fdInterest + (this.inputs.otherIncome.otherInterest || 0);
-
-                    const deduction80TTA = this.inputs.deductions.find(d => d.name === '80TTA - Interest on Savings Account');
-                    const deduction80TTB = this.inputs.deductions.find(d => d.name === '80TTB - Interest for Senior Citizens');
-
-                    if (this.inputs.age >= 60) { // Senior Citizen
-                        deduction80TTA.amount = 0; // 80TTA not applicable
-                        deduction80TTB.amount = Math.min(totalInterestForTTB, 50000);
-                    } else { // Non-Senior Citizen
-                        deduction80TTB.amount = 0; // 80TTB not applicable
-                        deduction80TTA.amount = Math.min(savingsInterest, 10000);
-                    }
-
                     const oldRegimeResult = this.calculateTaxByRegime('old');
                     const newRegimeResult = this.calculateTaxByRegime('new');
 
@@ -628,7 +608,7 @@
                         { label: 'Basic Salary', oldRegime: this.inputs.salary.basic, newRegime: this.inputs.salary.basic },
                         { label: 'HRA', oldRegime: this.inputs.salary.hra.actual, newRegime: this.inputs.salary.hra.actual },
                         { label: 'LTA', oldRegime: this.inputs.salary.lta.received, newRegime: this.inputs.salary.lta.received },
-                        { label: 'Other Allowances', oldRegime: totalOtherAllowances, newRegime: totalOtherAllowances },
+                        { label: 'Other Allowances', oldRegime: oldRegimeResult.totalOtherAllowances, newRegime: newRegimeResult.totalOtherAllowances },
                         { label: 'Perquisites (ESOP)', oldRegime: this.inputs.salary.perquisites.esop, newRegime: this.inputs.salary.perquisites.esop },
                         { label: 'Perquisites (Meal Vouchers)', oldRegime: this.inputs.salary.perquisites.meal, newRegime: this.inputs.salary.perquisites.meal },
                         { label: 'Perquisites (RFA)', oldRegime: this.inputs.salary.perquisites.rfa, newRegime: this.inputs.salary.perquisites.rfa },
@@ -649,10 +629,10 @@
                         { label: 'Less: Interest on Housing Loan', oldRegime: oldRegimeResult.hpInterestDeduction, newRegime: newRegimeResult.hpInterestDeduction },
                         { label: 'Income from House Property', oldRegime: oldRegimeResult.hpIncome, newRegime: newRegimeResult.hpIncome, isBold: true },
 
-                        { label: 'LTCG 112A (Equity) Taxable Gain', oldRegime: this.calculateCG(this.inputs.cg.ltcg112a, 'ltcg112a').taxableGain, newRegime: this.calculateCG(this.inputs.cg.ltcg112a, 'ltcg112a').taxableGain },
-                        { label: 'STCG 111A (Equity) Taxable Gain', oldRegime: this.calculateCG(this.inputs.cg.stcg111a, 'stcg111a').taxableGain, newRegime: this.calculateCG(this.inputs.cg.stcg111a, 'stcg111a').taxableGain },
-                        { label: 'LTCG 112 (Other) Taxable Gain', oldRegime: this.calculateCG(this.inputs.cg.ltcg112, 'ltcg112').taxableGain, newRegime: this.calculateCG(this.inputs.cg.ltcg112, 'ltcg112').taxableGain },
-                        { label: 'STCG (Other) Taxable Gain', oldRegime: this.calculateCG(this.inputs.cg.stcgOther, 'stcgOther').taxableGain, newRegime: this.calculateCG(this.inputs.cg.stcgOther, 'stcgOther').taxableGain },
+                        { label: 'LTCG 112A (Equity) Taxable Gain', oldRegime: oldRegimeResult.initialLTCG112A_TaxableGain, newRegime: newRegimeResult.initialLTCG112A_TaxableGain },
+                        { label: 'STCG 111A (Equity) Taxable Gain', oldRegime: oldRegimeResult.initialSTCG111A_TaxableGain, newRegime: newRegimeResult.initialSTCG111A_TaxableGain },
+                        { label: 'LTCG 112 (Other) Taxable Gain', oldRegime: oldRegimeResult.initialLTCG112_TaxableGain, newRegime: newRegimeResult.initialLTCG112_TaxableGain },
+                        { label: 'STCG (Other) Taxable Gain', oldRegime: oldRegimeResult.initialSTCGOther_TaxableGain, newRegime: newRegimeResult.initialSTCGOther_TaxableGain },
                         { label: 'Interest Income (Savings)', oldRegime: this.inputs.otherIncome.savingsInterest, newRegime: this.inputs.otherIncome.savingsInterest },
                         { label: 'Interest Income (FD)', oldRegime: this.inputs.otherIncome.fdInterest, newRegime: this.inputs.otherIncome.fdInterest },
                         { label: 'Interest Income (Other)', oldRegime: this.inputs.otherIncome.otherInterest, newRegime: this.inputs.otherIncome.otherInterest },
@@ -688,32 +668,15 @@
                 calculateTaxByRegime(regime) {
                     let { age, residentialStatus, financialYear, salary, houseProperty, cg, otherIncome, deductions, deductions80CCD1B, deductions80CCD2, taxPaid } = JSON.parse(JSON.stringify(this.inputs)); // Deep copy
                     
-                    // Sum all other allowances: primary and additional
+                    // --- 1. Calculate Gross Salary Income ---
                     let totalOtherAllowances = (salary.mainOtherAllowanceAmount || 0);
                     totalOtherAllowances += salary.additionalAllowances.reduce((sum, a) => sum + (a.amount || 0), 0);
-
-                    // Auto-populate 80TTA/80TTB based on age and interest income
-                    const savingsInterest = this.inputs.otherIncome.savingsInterest || 0;
-                    const fdInterest = this.inputs.otherIncome.fdInterest || 0;
-                    const totalInterestForTTB = savingsInterest + fdInterest + (this.inputs.otherIncome.otherInterest || 0);
-
-                    const deduction80TTA = this.inputs.deductions.find(d => d.name === '80TTA - Interest on Savings Account');
-                    const deduction80TTB = this.inputs.deductions.find(d => d.name === '80TTB - Interest for Senior Citizens');
-
-                    if (this.inputs.age >= 60) { // Senior Citizen
-                        deduction80TTA.amount = 0; // 80TTA not applicable
-                        deduction80TTB.amount = Math.min(totalInterestForTTB, 50000);
-                    } else { // Non-Senior Citizen
-                        deduction80TTB.amount = 0; // 80TTB not applicable
-                        deduction80TTA.amount = Math.min(savingsInterest, 10000);
-                    }
-
-                    // --- Salary Income Calculation ---
                     let totalPerquisites = (salary.perquisites.esop || 0) + (salary.perquisites.meal || 0) + (salary.perquisites.rfa || 0) + (salary.perquisites.other || 0);
                     let grossSalary = (salary.basic || 0) + (salary.hra.actual || 0) + (salary.lta.received || 0) + totalOtherAllowances + totalPerquisites;
                     
+                    // --- 2. Calculate Salary Exemptions/Deductions ---
                     let hraExemption = 0;
-                    if (regime === 'old' && salary.perquisites.rfa === 0) { // HRA only for old regime, and no RFA claimed
+                    if (regime === 'old' && salary.perquisites.rfa === 0) {
                         const basicForHRA = salary.hra.basicForHRA || 0;
                         const rentPaidMinus10PercBasic = Math.max(0, (salary.hra.rentPaid || 0) - 0.10 * basicForHRA);
                         const cityFactor = salary.hra.cityType === 'metro' ? 0.50 : 0.40;
@@ -722,16 +685,9 @@
                         hraExemption = Math.max(0, hraExemption);
                     }
 
-                    let ltaExemption = 0;
-                    if (regime === 'old') {
-                        ltaExemption = Math.min(salary.lta.received || 0, salary.lta.exempt || 0);
-                    }
-
-                    let exemptAllowances1014 = salary.exemptAllowances1014 || 0;
-                    if (regime === 'new') exemptAllowances1014 = 0; 
-
-                    let otherSalaryExemptions = salary.otherExemptions || 0;
-                    if (regime === 'new') otherSalaryExemptions = 0;
+                    let ltaExemption = (regime === 'old') ? Math.min(salary.lta.received || 0, salary.lta.exempt || 0) : 0;
+                    let exemptAllowances1014 = (regime === 'old') ? (salary.exemptAllowances1014 || 0) : 0;
+                    let otherSalaryExemptions = (regime === 'old') ? (salary.otherExemptions || 0) : 0;
 
                     let incomeBeforeStandardDeduction = grossSalary - hraExemption - ltaExemption - exemptAllowances1014 - otherSalaryExemptions;
 
@@ -758,7 +714,7 @@
                     taxableSalaryIncome = Math.max(0, taxableSalaryIncome);
 
 
-                    // --- House Property Income Calculation ---
+                    // --- 3. Calculate House Property Income ---
                     let hpIncome = 0;
                     let hpStdDeduction = 0;
                     let hpInterestDeduction = 0;
@@ -780,92 +736,50 @@
                     }
                     hpIncome = Math.round(hpIncome);
 
-                    // --- Capital Gains Calculation ---
-                    let cgIncomeForGTI = 0;
-                    let taxOnLTCG112A = 0;
-                    let taxOnSTCG111A = 0;
-                    let taxOnLTCG112 = 0;
-                    let taxOnLottery = (otherIncome.lottery || 0) * 0.30;
+                    // --- 4. Calculate Other Sources Income ---
+                    const savingsInterest = (otherIncome.savingsInterest || 0);
+                    const fdInterest = (otherIncome.fdInterest || 0);
+                    const otherInterest = (otherIncome.otherInterest || 0);
+                    const dividend = (otherIncome.dividend || 0);
+                    const lottery = (otherIncome.lottery || 0);
+                    const misc = (otherIncome.misc || 0);
 
-                    // LTCG 112A
-                    const ltcg112aResult = this.calculateCG(cg.ltcg112a, 'ltcg112a');
-                    if (ltcg112aResult.taxableGain > 0) {
-                        const saleDate112A = cg.ltcg112a.dateSale ? new Date(cg.ltcg112a.dateSale) : null;
-                        let threshold112A = 100000; // Default for prior years
-                        let rate112A = 0.10; // Default for prior years
-
-                        if (financialYear === '2024-25' || financialYear === '2025-26') { // Apply new rules for 24-25 and 25-26
-                            threshold112A = 125000;
-                            rate112A = (financialYear === '2024-25' && saleDate112A && saleDate112A >= new Date('2024-07-23')) ? 0.125 : 0.10;
-                            if (financialYear === '2025-26') { // For FY 2025-26, it's 12.5% on gains exceeding 1.25L
-                                rate112A = 0.125;
-                            }
-                        }
-                        taxOnLTCG112A = Math.max(0, ltcg112aResult.taxableGain - threshold112A) * rate112A;
-                        cgIncomeForGTI += ltcg112aResult.taxableGain;
-                    }
-
-                    // STCG 111A
-                    const stcg111aResult = this.calculateCG(cg.stcg111a, 'stcg111a');
-                    if (stcg111aResult.taxableGain > 0) {
-                        const saleDate111A = cg.stcg111a.dateSale ? new Date(cg.stcg111a.dateSale) : null;
-                        let rate111A = 0.15; // Default for prior years
-                        if (financialYear === '2024-25') {
-                            rate111A = saleDate111A && saleDate111A >= new Date('2024-07-23') ? 0.20 : 0.15;
-                        } else if (financialYear === '2025-26') { // For FY 2025-26, it's 20%
-                            rate111A = 0.20;
-                        }
-                        taxOnSTCG111A = stcg111aResult.taxableGain * rate111A;
-                        cgIncomeForGTI += stcg111aResult.taxableGain;
-                    }
+                    let totalInterestIncome = savingsInterest + fdInterest + otherInterest;
+                    let otherSourcesNormalIncome = totalInterestIncome + dividend + misc;
                     
-                    // LTCG 112
-                    const ltcg112Result = this.calculateCG(cg.ltcg112, 'ltcg112');
-                    if (ltcg112Result.taxableGain > 0) {
-                        const saleDate112 = cg.ltcg112.dateSale ? new Date(cg.ltcg112.dateSale) : null;
-                        const acqDate112 = cg.ltcg112.dateAcquisition ? new Date(cg.ltcg112.dateAcquisition) : null;
-                        let rate112 = 0.20; // Default with indexation for prior years
+                    // --- 5. Initial Capital Gains Taxable Amounts (before potential exemption utilization) ---
+                    let initialLTCG112A_TaxableGain = this.calculateCG(cg.ltcg112a, 'ltcg112a').taxableGain;
+                    let initialSTCG111A_TaxableGain = this.calculateCG(cg.stcg111a, 'stcg111a').taxableGain;
+                    let initialLTCG112_TaxableGain = this.calculateCG(cg.ltcg112, 'ltcg112').taxableGain;
+                    let initialSTCGOther_TaxableGain = this.calculateCG(cg.stcgOther, 'stcgOther').taxableGain;
 
-                        if (financialYear === '2024-25') {
-                            if (saleDate112 && saleDate112 >= new Date('2024-07-23')) {
-                                if (cg.ltcg112.assetType === 'land_building' && acqDate112 && acqDate112 <= new Date('2024-07-22')) {
-                                    rate112 = cg.ltcg112.useIndexedCost ? 0.20 : 0.125;
-                                } else {
-                                    rate112 = 0.125; // Corrected
-                                }
-                            } else {
-                                rate112 = 0.20; // Before 23/7/24 in FY 2024-25, still 20% with indexation
-                            }
-                        } else if (financialYear === '2025-26') { // For FY 2025-26, it's 12.5% without indexation for most assets.
-                            rate112 = 0.125;
-                        } else { // For FY 2022-23, 2023-24, generally 20% with indexation applies
-                            rate112 = 0.20;
-                        }
-                        taxOnLTCG112 = ltcg112Result.taxableGain * rate112;
-                        cgIncomeForGTI += ltcg112Result.taxableGain;
-                    }
-
-                    // STCG Other
-                    const stcgOtherResult = this.calculateCG(cg.stcgOther, 'stcgOther');
-                    cgIncomeForGTI += stcgOtherResult.taxableGain;
-
-
-                    // --- Other Sources Income ---
-                    let totalInterestIncome = (otherIncome.savingsInterest || 0) + (otherIncome.fdInterest || 0) + (otherIncome.otherInterest || 0);
-                    let otherSourcesNormalIncome = totalInterestIncome + (otherIncome.dividend || 0) + (otherIncome.misc || 0);
+                    let currentLTCG112A_TaxableGain = initialLTCG112A_TaxableGain;
+                    let currentSTCG111A_TaxableGain = initialSTCG111A_TaxableGain;
+                    let currentLTCG112_TaxableGain = initialLTCG112_TaxableGain;
+                    let currentSTCGOther_TaxableGain = initialSTCGOther_TaxableGain;
                     
-                    // --- Gross Total Income (GTI) ---
-                    let grossTotalIncome = taxableSalaryIncome + hpIncome + cgIncomeForGTI + otherSourcesNormalIncome + (otherIncome.lottery || 0);
-                    grossTotalIncome = Math.max(0, grossTotalIncome);
+                    // --- 6. Calculate Gross Total Income (GTI) before Chapter VI-A deductions ---
+                    let grossTotalIncomeBeforeDeductions = taxableSalaryIncome + hpIncome + currentLTCG112A_TaxableGain + currentSTCG111A_TaxableGain + currentLTCG112_TaxableGain + currentSTCGOther_TaxableGain + otherSourcesNormalIncome + lottery;
+                    grossTotalIncomeBeforeDeductions = Math.max(0, grossTotalIncomeBeforeDeductions);
 
-                    // --- Deductions Chapter VI-A ---
+                    // --- 7. Apply Chapter VI-A Deductions ---
                     let totalDeductionsVI_A = 0;
+                    // Auto-populate 80TTA/80TTB based on age and interest income
+                    const totalInterestForTTB = savingsInterest + fdInterest + otherInterest;
+                    const deduction80TTA = deductions.find(d => d.name === '80TTA - Interest on Savings Account');
+                    const deduction80TTB = deductions.find(d => d.name === '80TTB - Interest for Senior Citizens');
+
+                    if (age >= 60) { // Senior Citizen
+                        deduction80TTA.amount = 0; // 80TTA not applicable
+                        deduction80TTB.amount = Math.min(totalInterestForTTB, 50000);
+                    } else { // Non-Senior Citizen
+                        deduction80TTB.amount = 0; // 80TTB not applicable
+                        deduction80TTA.amount = Math.min(savingsInterest, 10000);
+                    }
+
                     deductions.forEach(d => {
-                        if (regime === 'old') { // All deductions allowed in old regime
+                        if (regime === 'old' || d.newRegimeAllowed) { // Only specific deductions allowed in new regime
                             totalDeductionsVI_A += Math.min(d.amount || 0, d.limit === Infinity ? d.amount : d.limit);
-                        } else { // New regime only allows specific deductions
-                            // 80CCD(2) is handled separately below. Other specific new regime allowed deductions can be added here if needed.
-                            // For now, no other standard deductions are allowed in new regime.
                         }
                     });
                     
@@ -874,147 +788,209 @@
                     }
                     
                     // 80CCD(2) - Allowed in both regimes
-                    const salaryFor80CCD2 = (salary.basic || 0) + (salary.specialAllowancesTaxable || 0);
-                    const limit80CCD2 = salaryFor80CCD2 * 0.10;
+                    const salaryFor80CCD2 = (salary.basic || 0) + totalOtherAllowances; // Using totalOtherAllowances as a proxy for DA if not explicitly provided
+                    const limit80CCD2 = salaryFor80CCD2 * 0.10; // Assuming 10% for private, 14% for govt not explicit in input
                     totalDeductionsVI_A += Math.min(deductions80CCD2 || 0, limit80CCD2);
                     
-                    // --- Total Taxable Income ---
-                    let totalTaxableIncome = grossTotalIncome - totalDeductionsVI_A;
+                    // --- 8. Calculate Total Taxable Income (after Chapter VI-A deductions) ---
+                    let totalTaxableIncome = grossTotalIncomeBeforeDeductions - totalDeductionsVI_A;
                     totalTaxableIncome = Math.max(0, totalTaxableIncome);
 
-                    // --- Tax Calculation ---
-                    let incomeForSlabRates = totalTaxableIncome - ltcg112aResult.taxableGain - stcg111aResult.taxableGain - ltcg112Result.taxableGain - (otherIncome.lottery || 0);
+                    // --- 9. Separate Normal and Special Income for Tax Calculation ---
+                    let incomeForSlabRates = totalTaxableIncome - currentLTCG112A_TaxableGain - currentSTCG111A_TaxableGain - currentLTCG112_TaxableGain - lottery;
                     incomeForSlabRates = Math.max(0, incomeForSlabRates);
 
+                    // --- 10. Unutilized Basic Exemption (Step 4c from user's logic) ---
+                    let basicExemptionLimit = 0;
+                    const slabsForExemption = getSlabs(regime, age, financialYear);
+                    if (slabsForExemption.length > 0) {
+                        basicExemptionLimit = slabsForExemption[0].limit; // First slab limit is basic exemption
+                    }
+
+                    let unutilizedExemption = 0;
+                    if (residentialStatus === 'resident' && incomeForSlabRates < basicExemptionLimit) {
+                        unutilizedExemption = basicExemptionLimit - incomeForSlabRates;
+                    }
+
+                    // Apply unutilized exemption to STCG 111A and then LTCG 112A
+                    if (unutilizedExemption > 0) {
+                        let reductionFromSTCG111A = Math.min(unutilizedExemption, currentSTCG111A_TaxableGain);
+                        currentSTCG111A_TaxableGain -= reductionFromSTCG111A;
+                        unutilizedExemption -= reductionFromSTCG111A;
+
+                        if (unutilizedExemption > 0) {
+                            let reductionFromLTCG112A = Math.min(unutilizedExemption, currentLTCG112A_TaxableGain);
+                            currentLTCG112A_TaxableGain -= reductionFromLTCG112A;
+                        }
+                    }
+
+                    // --- 11. Calculate Tax on Normal Income (Slabs) ---
                     let taxOnNormalIncome = 0;
-                    const slabs = getSlabs(regime, age, financialYear);
-                    let remainingIncome = incomeForSlabRates;
-                    for (let i = 0; i < slabs.length; i++) {
-                        const slab = slabs[i];
-                        if (remainingIncome <= 0) break;
-                        const lowerBound = (i > 0 ? slabs[i-1].limit : 0);
-                        const taxableInSlab = Math.min(remainingIncome, slab.limit - lowerBound);
+                    let remainingIncomeForSlabs = incomeForSlabRates;
+                    for (let i = 0; i < slabsForExemption.length; i++) {
+                        const slab = slabsForExemption[i];
+                        if (remainingIncomeForSlabs <= 0) break;
+                        const lowerBound = (i > 0 ? slabsForExemption[i-1].limit : 0);
+                        const taxableInSlab = Math.min(remainingIncomeForSlabs, slab.limit - lowerBound);
                         taxOnNormalIncome += taxableInSlab * slab.rate;
-                        remainingIncome -= taxableInSlab;
+                        remainingIncomeForSlabs -= taxableInSlab;
                     }
-                    if (remainingIncome > 0 && slabs.length > 0) {
-                         taxOnNormalIncome += remainingIncome * slabs[slabs.length -1].rate_overflow;
+                    if (remainingIncomeForSlabs > 0 && slabsForExemption.length > 0 && slabsForExemption[slabsForExemption.length -1].rate_overflow !== undefined) {
+                         taxOnNormalIncome += remainingIncomeForSlabs * slabsForExemption[slabsForExemption.length -1].rate_overflow;
                     }
 
-                    // Total tax before any rebate (for display purposes)
-                    let totalTaxBeforeAnyRebateOrSurcharge = taxOnNormalIncome + taxOnLTCG112A + taxOnSTCG111A + taxOnLTCG112 + taxOnLottery;
+                    // --- 12. Calculate Tax on Special Incomes (after potential exemption utilization) ---
+                    let taxOnLTCG112A = 0;
+                    if (currentLTCG112A_TaxableGain > 0) {
+                        const saleDate112A = cg.ltcg112a.dateSale ? new Date(cg.ltcg112a.dateSale) : null;
+                        let threshold112A = 100000;
+                        let rate112A = 0.10;
 
-                    // Rebate u/s 87A
+                        if (financialYear === '2024-25' || financialYear === '2025-26') {
+                            threshold112A = 125000;
+                            rate112A = (financialYear === '2024-25' && saleDate112A && saleDate112A >= new Date('2024-07-23')) ? 0.125 : 0.10;
+                            if (financialYear === '2025-26') {
+                                rate112A = 0.125;
+                            }
+                        }
+                        taxOnLTCG112A = Math.max(0, (currentLTCG112A_TaxableGain - threshold112A)) * rate112A;
+                    }
+
+                    let taxOnSTCG111A = 0;
+                    if (currentSTCG111A_TaxableGain > 0) {
+                        const saleDate111A = cg.stcg111a.dateSale ? new Date(cg.stcg111a.dateSale) : null;
+                        let rate111A = 0.15;
+                        if (financialYear === '2024-25') {
+                            rate111A = saleDate111A && saleDate111A >= new Date('2024-07-23') ? 0.20 : 0.15;
+                        } else if (financialYear === '2025-26') {
+                            rate111A = 0.20;
+                        }
+                        taxOnSTCG111A = currentSTCG111A_TaxableGain * rate111A;
+                    }
+                    
+                    let taxOnLTCG112 = 0;
+                    if (currentLTCG112_TaxableGain > 0) {
+                        const saleDate112 = cg.ltcg112.dateSale ? new Date(cg.ltcg112.dateSale) : null;
+                        const acqDate112 = cg.ltcg112.dateAcquisition ? new Date(cg.ltcg112.dateAcquisition) : null;
+                        let rate112 = 0.20;
+
+                        if (financialYear === '2024-25') {
+                            if (saleDate112 && saleDate112 >= new Date('2024-07-23')) {
+                                if (cg.ltcg112.assetType === 'land_building' && acqDate112 && acqDate112 <= new Date('2024-07-22')) {
+                                    rate112 = cg.ltcg112.useIndexedCost ? 0.20 : 0.125;
+                                } else {
+                                    rate112 = 0.125;
+                                }
+                            } else {
+                                rate112 = 0.20;
+                            }
+                        } else if (financialYear === '2025-26') {
+                            rate112 = 0.125;
+                        } else {
+                            rate112 = 0.20;
+                        }
+                        taxOnLTCG112 = currentLTCG112_TaxableGain * rate112;
+                    }
+                    let taxOnLottery = lottery * 0.30;
+
+                    // --- 13. Rebate u/s 87A (with marginal relief for new regime) ---
                     let rebate87A = 0;
-                    if (residentialStatus === 'resident') {
+                    if (residentialStatus === 'resident' || residentialStatus === 'rnor') { // Only for Resident or NOR
                         const rebateLimit = REBATE_87A_LIMITS[financialYear][regime];
-                        // The income threshold for rebate should exclude special rate incomes
-                        const incomeForRebateEligibility = totalTaxableIncome - ltcg112aResult.taxableGain - stcg111aResult.taxableGain - ltcg112Result.taxableGain - (otherIncome.lottery || 0);
+                        const incomeForRebateEligibility = totalTaxableIncome - currentLTCG112A_TaxableGain - currentSTCG111A_TaxableGain - currentLTCG112_TaxableGain - lottery;
                         
-                        if (incomeForRebateEligibility <= rebateLimit.incomeThreshold) {
-                            // Rebate is applied only to tax on normal income
+                        if (incomeForRebateEligibility <= rebateLimit.incomeThreshold) { // Income <= 7 Lacs
                             rebate87A = Math.min(taxOnNormalIncome, rebateLimit.amount);
+                        } else if (regime === 'new' && incomeForRebateEligibility > rebateLimit.incomeThreshold) { // New Regime, Income > 7 Lacs
+                            // "Relief is of an amount equal to the amount by Income tax (-) Income in excess of 7 lacs"
+                            const hypotheticalTaxPayable = taxOnNormalIncome - (incomeForRebateEligibility - rebateLimit.incomeThreshold);
+                            rebate87A = Math.max(0, taxOnNormalIncome - hypotheticalTaxPayable);
+                            rebate87A = Math.min(rebate87A, rebateLimit.amount); // Cap at 25000
                         }
                     }
                     
-                    // Calculate tax after applying rebate to normal income
                     let taxOnNormalIncomeAfterRebate = Math.max(0, taxOnNormalIncome - rebate87A);
 
-                    // Total tax after applying rebate to normal income, and adding special rate taxes
-                    let totalTaxAfterRebateAndSpecialRates = taxOnNormalIncomeAfterRebate + taxOnLTCG112A + taxOnSTCG111A + taxOnLTCG112 + taxOnLottery;
+                    // --- 14. Total tax before surcharge and cess ---
+                    let totalTaxBeforeSurchargeAndCess = taxOnNormalIncomeAfterRebate + taxOnLTCG112A + taxOnSTCG111A + taxOnLTCG112 + taxOnLottery;
 
-                    // Surcharge
+                    // --- 15. Surcharge Calculation ---
                     let surcharge = 0;
-                    let surchargeRate = 0;
+                    let totalSurchargeBeforeMarginalRelief = 0;
 
-                    // Determine surcharge rate based on totalTaxableIncome
-                    // For FY25-26 new regime, surcharge capped at 25% if any special income is present.
-                    // For other years/regimes, standard surcharge rates apply.
-                    if (totalTaxableIncome > 50000000) {
-                        if (regime === 'new' && financialYear === '2025-26') {
-                            surchargeRate = 0.25; // Capped at 25% for new regime FY25-26
-                        } else {
-                            surchargeRate = 0.37; // Default for old regime and prior new regimes
+                    const totalTaxableIncomeForSurchargeSlabs = totalTaxableIncome;
+
+                    if (totalTaxableIncomeForSurchargeSlabs > 5000000) {
+                        let generalSurchargeRate = 0;
+                        if (totalTaxableIncomeForSurchargeSlabs > 50000000) {
+                            generalSurchargeRate = (regime === 'new' && financialYear >= '2023-24') ? 0.25 : 0.37;
+                        } else if (totalTaxableIncomeForSurchargeSlabs > 20000000) {
+                            generalSurchargeRate = 0.25;
+                        } else if (totalTaxableIncomeForSurchargeSlabs > 10000000) {
+                            generalSurchargeRate = 0.15;
+                        } else if (totalTaxableIncomeForSurchargeSlabs > 5000000) {
+                            generalSurchargeRate = 0.10;
                         }
-                    } else if (totalTaxableIncome > 20000000) {
-                        surchargeRate = 0.25;
-                    } else if (totalTaxableIncome > 10000000) {
-                        surchargeRate = 0.15;
-                    } else if (totalTaxableIncome > 5000000) {
-                        surchargeRate = 0.10;
+
+                        // Surcharge on specified capital gains (LTCG 112A, STCG 111A, LTCG 112)
+                        const taxOnCapitalGainsSubjectTo15PercentSurcharge = taxOnLTCG112A + taxOnSTCG111A + taxOnLTCG112;
+                        const surchargeOnCapitalGains = taxOnCapitalGainsSubjectTo15PercentSurcharge * Math.min(generalSurchargeRate, 0.15);
+
+                        // Surcharge on Dividend Income (capped at 15%)
+                        let taxAttributableToDividend = 0;
+                        // To find tax attributable to dividend, consider the tax on normal income if dividend was excluded.
+                        // Then subtract that from tax on normal income (including dividend).
+                        const normalIncomeForSlabExcludingDividend = incomeForSlabRates - dividend;
+                        const taxOnNormalIncomeExcludingDividend = this.calculateTaxOnNormalIncome(normalIncomeForSlabExcludingDividend, regime, age, financialYear, residentialStatus);
+                        taxAttributableToDividend = Math.max(0, taxOnNormalIncomeAfterRebate - taxOnNormalIncomeExcludingDividend);
+                        
+                        const surchargeOnDividend = taxAttributableToDividend * Math.min(generalSurchargeRate, 0.15);
+
+                        // Surcharge on Remaining Normal Income
+                        const taxOnRemainingNormalIncome = taxOnNormalIncomeAfterRebate - taxAttributableToDividend;
+                        const surchargeOnRemainingNormalIncome = taxOnRemainingNormalIncome * generalSurchargeRate;
+                        
+                        totalSurchargeBeforeMarginalRelief = surchargeOnCapitalGains + surchargeOnDividend + surchargeOnRemainingNormalIncome;
                     }
-                    
-                    surcharge = totalTaxAfterRebateAndSpecialRates * surchargeRate;
 
-                    // Marginal Relief
-                    let marginalRelief = 0;
-                    if (surchargeRate > 0) {
-                        let taxAtLowerThreshold = 0;
+                    let finalTaxPlusSurchargeBeforeMR = totalTaxBeforeSurchargeAndCess + totalSurchargeBeforeMarginalRelief;
+
+                    // Marginal Relief Calculation for Surcharge (as per image examples)
+                    let marginalReliefSurcharge = 0;
+                    if (totalSurchargeBeforeMarginalRelief > 0) {
                         let lowerThresholdIncome = 0;
+                        let lowerThresholdTaxPlusSurcharge = 0;
 
-                        if (totalTaxableIncome > 5000000 && totalTaxableIncome <= 10000000) {
+                        if (totalTaxableIncomeForSurchargeSlabs > 5000000 && totalTaxableIncomeForSurchargeSlabs <= 10000000) {
                             lowerThresholdIncome = 5000000;
-                            lowerThresholdSurchargeRate = 0; 
-                        } else if (totalTaxableIncome > 10000000 && totalTaxableIncome <= 20000000) {
+                            const tempResultAtThreshold = this.calculateTaxForThreshold(lowerThresholdIncome, regime, age, financialYear, residentialStatus, initialLTCG112A_TaxableGain, initialSTCG111A_TaxableGain, initialLTCG112_TaxableGain, lottery, dividend);
+                            lowerThresholdTaxPlusSurcharge = tempResultAtThreshold.taxPlusSurcharge;
+
+                        } else if (totalTaxableIncomeForSurchargeSlabs > 10000000 && totalTaxableIncomeForSurchargeSlabs <= 20000000) {
                             lowerThresholdIncome = 10000000;
-                            lowerThresholdSurchargeRate = 0.10;
-                        } else if (totalTaxableIncome > 20000000 && totalTaxableIncome <= 50000000) {
+                            const tempResultAtThreshold = this.calculateTaxForThreshold(lowerThresholdIncome, regime, age, financialYear, residentialStatus, initialLTCG112A_TaxableGain, initialSTCG111A_TaxableGain, initialLTCG112_TaxableGain, lottery, dividend);
+                            lowerThresholdTaxPlusSurcharge = tempResultAtThreshold.taxPlusSurcharge;
+                        } else if (totalTaxableIncomeForSurchargeSlabs > 20000000 && totalTaxableIncomeForSurchargeSlabs <= 50000000) {
                             lowerThresholdIncome = 20000000;
-                            lowerThresholdSurchargeRate = 0.15;
-                        } else if (totalTaxableIncome > 50000000) {
+                            const tempResultAtThreshold = this.calculateTaxForThreshold(lowerThresholdIncome, regime, age, financialYear, residentialStatus, initialLTCG112A_TaxableGain, initialSTCG111A_TaxableGain, initialLTCG112_TaxableGain, lottery, dividend);
+                            lowerThresholdTaxPlusSurcharge = tempResultAtThreshold.taxPlusSurcharge;
+                        } else if (totalTaxableIncomeForSurchargeSlabs > 50000000) {
                             lowerThresholdIncome = 50000000;
-                            if (regime === 'new' && financialYear === '2025-26') {
-                                lowerThresholdSurchargeRate = 0.25;
-                            } else {
-                                lowerThresholdSurchargeRate = 0.25; 
-                            }
+                            const tempResultAtThreshold = this.calculateTaxForThreshold(lowerThresholdIncome, regime, age, financialYear, residentialStatus, initialLTCG112A_TaxableGain, initialSTCG111A_TaxableGain, initialLTCG112_TaxableGain, lottery, dividend);
+                            lowerThresholdTaxPlusSurcharge = tempResultAtThreshold.taxPlusSurcharge;
                         }
 
                         if (lowerThresholdIncome > 0) {
-                            let tempIncomeForSlab = lowerThresholdIncome - ltcg112aResult.taxableGain - stcg111aResult.taxableGain - ltcg112Result.taxableGain - (otherIncome.lottery || 0);
-                            tempIncomeForSlab = Math.max(0, tempIncomeForSlab);
-                            
-                            let tempTaxOnNormal = 0;
-                            let tempRemainingIncome = tempIncomeForSlab;
-                            const tempSlabs = getSlabs(regime, age, financialYear);
-                            for (let i = 0; i < tempSlabs.length; i++) {
-                                const slab = tempSlabs[i];
-                                if (tempRemainingIncome <= 0) break;
-                                const lowerBound = (i > 0 ? tempSlabs[i-1].limit : 0);
-                                const taxableInSlab = Math.min(tempRemainingIncome, slab.limit - lowerBound);
-                                tempTaxOnNormal += taxableInSlab * slab.rate;
-                                tempRemainingIncome -= taxableInSlab;
-                            }
-                            if (tempRemainingIncome > 0 && tempSlabs.length > 0) {
-                                tempTaxOnNormal += tempRemainingIncome * tempSlabs[tempSlabs.length -1].rate_overflow;
-                            }
-
-                            let tempRebate87A = 0;
-                            const tempRebateLimit = REBATE_87A_LIMITS[financialYear][regime];
-                            const tempIncomeForRebateEligibility = lowerThresholdIncome - ltcg112aResult.taxableGain - stcg111aResult.taxableGain - ltcg112Result.taxableGain - (otherIncome.lottery || 0);
-                            if (residentialStatus === 'resident' && tempIncomeForRebateEligibility <= tempRebateLimit.incomeThreshold) {
-                                tempRebate87A = Math.min(tempTaxOnNormal, tempRebateLimit.amount);
-                            }
-                            let tempTaxOnNormalAfterRebate = Math.max(0, tempTaxOnNormal - tempRebate87A);
-
-                            let taxAtLowerThresholdBeforeSurcharge = tempTaxOnNormalAfterRebate + taxOnLTCG112A + taxOnSTCG111A + taxOnLTCG112 + taxOnLottery;
-                            
-                            let taxAtLowerThresholdWithSurcharge = taxAtLowerThresholdBeforeSurcharge * (1 + lowerThresholdSurchargeRate);
-
-                            const taxWithCurrentSurcharge = totalTaxAfterRebateAndSpecialRates + surcharge;
-
-                            const excessIncome = totalTaxableIncome - lowerThresholdIncome;
-                            
-                            if (taxWithCurrentSurcharge > (taxAtLowerThresholdWithSurcharge + excessIncome)) {
-                                marginalRelief = taxWithCurrentSurcharge - (taxAtLowerThresholdWithSurcharge + excessIncome);
-                            } else {
-                                marginalRelief = 0;
+                            const excessIncome = totalTaxableIncomeForSurchargeSlabs - lowerThresholdIncome;
+                            if (finalTaxPlusSurchargeBeforeMR > (lowerThresholdTaxPlusSurcharge + excessIncome)) {
+                                marginalReliefSurcharge = finalTaxPlusSurchargeBeforeMR - (lowerThresholdTaxPlusSurcharge + excessIncome);
                             }
                         }
                     }
-                    surcharge = Math.max(0, surcharge - marginalRelief);
+                    
+                    surcharge = Math.max(0, totalSurchargeBeforeMarginalRelief - marginalReliefSurcharge);
 
-                    let taxPlusSurcharge = totalTaxAfterRebateAndSpecialRates + surcharge;
+                    let taxPlusSurcharge = totalTaxBeforeSurchargeAndCess + surcharge;
                     let cess = taxPlusSurcharge * 0.04;
                     let finalTaxLiability = Math.round((taxPlusSurcharge + cess)/10)*10;
 
@@ -1034,18 +1010,18 @@
                         const shortfall = Math.max(0, netTaxAfterTDS - totalAdvanceTaxPaid);
                         if (shortfall > 0) {
                             let assessmentYear = parseInt(financialYear.substring(0, 4)) + 1;
-                            let interestStartDate = new Date(`${assessmentYear}-04-01`); // April 1st of AY
+                            let interestStartDate = new Date(`${assessmentYear}-04-01`);
                             let interestEndDate;
 
                             if (taxPaid.paymentDate) {
                                 interestEndDate = new Date(taxPaid.paymentDate);
                             } else {
-                                interestEndDate = new Date(`${assessmentYear}-07-31`); // Default ITR due date
+                                interestEndDate = new Date(`${assessmentYear}-07-31`);
                             }
 
                             if (interestEndDate > interestStartDate) {
                                 const diffTime = interestEndDate.getTime() - interestStartDate.getTime();
-                                const diffMonths = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 30.4375)); // Approx months
+                                const diffMonths = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 30.4375));
                                 interest234B = Math.round(shortfall * 0.01 * diffMonths);
                             }
                         }
@@ -1054,10 +1030,10 @@
                     // --- Interest u/s 234C ---
                     let interest234C = 0;
                     const advanceTaxDueDates = [
-                        { date: new Date(parseInt(financialYear.substring(0, 4)), 5, 15), percentage: 0.15, q_tds: taxPaid.tds.q1 || 0, q_at: taxPaid.advanceTax.q1 || 0 }, // June 15
-                        { date: new Date(parseInt(financialYear.substring(0, 4)), 8, 15), percentage: 0.45, q_tds: (taxPaid.tds.q1 || 0) + (taxPaid.tds.q2 || 0), q_at: (taxPaid.advanceTax.q1 || 0) + (taxPaid.advanceTax.q2 || 0) }, // Sept 15
-                        { date: new Date(parseInt(financialYear.substring(0, 4)), 11, 15), percentage: 0.75, q_tds: (taxPaid.tds.q1 || 0) + (taxPaid.tds.q2 || 0) + (taxPaid.tds.q3 || 0), q_at: (taxPaid.advanceTax.q1 || 0) + (taxPaid.advanceTax.q2 || 0) + (taxPaid.advanceTax.q3 || 0) }, // Dec 15
-                        { date: new Date(parseInt(financialYear.substring(0, 4)) + 1, 2, 15), percentage: 1.00, q_tds: (taxPaid.tds.q1 || 0) + (taxPaid.tds.q2 || 0) + (taxPaid.tds.q3 || 0) + (taxPaid.tds.q4 || 0), q_at: (taxPaid.advanceTax.q1 || 0) + (taxPaid.advanceTax.q2 || 0) + (taxPaid.advanceTax.q3 || 0) + (taxPaid.advanceTax.q4 || 0) }  // March 15
+                        { date: new Date(parseInt(financialYear.substring(0, 4)), 5, 15), percentage: 0.15, q_tds: taxPaid.tds.q1 || 0, q_at: taxPaid.advanceTax.q1 || 0 },
+                        { date: new Date(parseInt(financialYear.substring(0, 4)), 8, 15), percentage: 0.45, q_tds: (taxPaid.tds.q1 || 0) + (taxPaid.tds.q2 || 0), q_at: (taxPaid.advanceTax.q1 || 0) + (taxPaid.advanceTax.q2 || 0) },
+                        { date: new Date(parseInt(financialYear.substring(0, 4)), 11, 15), percentage: 0.75, q_tds: (taxPaid.tds.q1 || 0) + (taxPaid.tds.q2 || 0) + (taxPaid.tds.q3 || 0), q_at: (taxPaid.advanceTax.q1 || 0) + (taxPaid.advanceTax.q2 || 0) + (taxPaid.advanceTax.q3 || 0) },
+                        { date: new Date(parseInt(financialYear.substring(0, 4)) + 1, 2, 15), percentage: 1.00, q_tds: (taxPaid.tds.q1 || 0) + (taxPaid.tds.q2 || 0) + (taxPaid.tds.q3 || 0) + (taxPaid.tds.q4 || 0), q_at: (taxPaid.advanceTax.q1 || 0) + (taxPaid.advanceTax.q2 || 0) + (taxPaid.advanceTax.q3 || 0) + (taxPaid.advanceTax.q4 || 0) }
                     ];
 
                     for (let i = 0; i < advanceTaxDueDates.length; i++) {
@@ -1068,7 +1044,7 @@
                         if (taxPaidTillDate < requiredAdvanceTax) {
                             let shortfall = requiredAdvanceTax - taxPaidTillDate;
                             let interestMonths = 3; 
-                            if (i === 3) { // For Q4 shortfall (March 15)
+                            if (i === 3) {
                                 interestMonths = 1; 
                             }
                             interest234C += Math.round(shortfall * 0.01 * interestMonths);
@@ -1080,16 +1056,18 @@
 
                     return {
                         grossSalary, hraExemption, ltaExemption, exemptAllowances1014, otherSalaryExemptions,
+                        totalOtherAllowances,
                         taxableAllowancesAndPerks: totalPerquisites,
                         taxableAllowancesAndPerksNew: totalPerquisites,
                         standardDeduction, professionalTax, entertainmentAllowance,
                         taxableSalaryIncome,
                         hpIncome, hpStdDeduction, hpInterestDeduction,
-                        cgIncome: cgIncomeForGTI,
+                        initialLTCG112A_TaxableGain, initialSTCG111A_TaxableGain, initialLTCG112_TaxableGain, initialSTCGOther_TaxableGain, // Return initial for summary
+                        cgIncome: initialLTCG112A_TaxableGain + initialSTCG111A_TaxableGain + initialLTCG112_TaxableGain + initialSTCGOther_TaxableGain, // Sum of initial for GTI display
                         totalInterestIncome: totalInterestIncome,
                         otherSourcesNormalIncome: otherSourcesNormalIncome,
                         taxOnLottery: taxOnLottery,
-                        grossTotalIncome: Math.round(grossTotalIncome/10)*10,
+                        grossTotalIncome: Math.round(grossTotalIncomeBeforeDeductions/10)*10,
                         totalDeductionsVI_A,
                         totalTaxableIncome: Math.round(totalTaxableIncome/10)*10,
                         taxOnNormalIncome,
@@ -1097,10 +1075,10 @@
                         taxOnLTCG112A: Math.round(taxOnLTCG112A),
                         taxOnSTCG111A: Math.round(taxOnSTCG111A),
                         taxOnLTCG112: Math.round(taxOnLTCG112),
-                        totalTaxBeforeRebate: totalTaxBeforeAnyRebateOrSurcharge, // This is the sum of all taxes before any rebate
-                        rebate87A,
+                        totalTaxBeforeRebate: totalTaxBeforeSurchargeAndCess,
+                        rebate87A: Math.round(rebate87A),
                         surcharge: Math.round(surcharge),
-                        totalTaxAfterRebateAndSpecialRates: Math.round(totalTaxAfterRebateAndSpecialRates), // This is the tax after rebate on normal income + special rates
+                        totalTaxAfterRebateAndSpecialRates: Math.round(totalTaxBeforeSurchargeAndCess),
                         taxPlusSurcharge: Math.round(taxPlusSurcharge),
                         cess: Math.round(cess),
                         finalTaxLiability,
@@ -1112,9 +1090,123 @@
                     };
                 },
 
-                printSummary() {
-                    window.print();
-                }
+                // Helper function to calculate tax on normal income (for marginal relief)
+                calculateTaxOnNormalIncome(income, regime, age, financialYear, residentialStatus) {
+                    let tax = 0;
+                    let remainingIncome = income;
+                    const slabs = getSlabs(regime, age, financialYear);
+
+                    for (let i = 0; i < slabs.length; i++) {
+                        const slab = slabs[i];
+                        if (remainingIncome <= 0) break;
+                        const lowerBound = (i > 0 ? slabs[i-1].limit : 0);
+                        const taxableInSlab = Math.min(remainingIncome, slab.limit - lowerBound);
+                        tax += taxableInSlab * slab.rate;
+                        remainingIncome -= taxableInSlab;
+                    }
+                    if (remainingIncome > 0 && slabs.length > 0 && slabs[slabs.length -1].rate_overflow !== undefined) {
+                        tax += remainingIncome * slabs[slabs.length -1].rate_overflow;
+                    }
+                    return tax;
+                },
+
+                // Helper function to calculate tax + surcharge at a given threshold income for marginal relief
+                calculateTaxForThreshold(thresholdIncome, regime, age, financialYear, residentialStatus, initialLTCG112A_TaxableGain, initialSTCG111A_TaxableGain, initialLTCG112_TaxableGain, lottery, dividend) {
+                    // This function simulates the tax calculation at a specific threshold income.
+                    // It assumes that the composition of income (normal vs. special) remains proportional
+                    // to the original income, or that the 'excess' income is primarily normal income.
+                    // For simplicity, we calculate tax on normal income up to the threshold,
+                    // and apply special income taxes based on their original amounts (as they are usually fixed).
+
+                    let normalIncomeAtThreshold = Math.max(0, thresholdIncome - initialLTCG112A_TaxableGain - initialSTCG111A_TaxableGain - initialLTCG112_TaxableGain - lottery);
+                    normalIncomeAtThreshold = Math.max(0, normalIncomeAtThreshold); // Ensure it's not negative
+
+                    let taxOnNormal = this.calculateTaxOnNormalIncome(normalIncomeAtThreshold, regime, age, financialYear, residentialStatus);
+
+                    // Recalculate special income taxes based on their initial amounts, as they are not affected by threshold income directly
+                    let taxOnLTCG112A_thresh = 0;
+                    if (initialLTCG112A_TaxableGain > 0) {
+                        const saleDate112A = this.inputs.cg.ltcg112a.dateSale ? new Date(this.inputs.cg.ltcg112a.dateSale) : null;
+                        let threshold112A = 100000;
+                        let rate112A = 0.10;
+                        if (financialYear === '2024-25' || financialYear === '2025-26') {
+                            threshold112A = 125000;
+                            rate112A = (financialYear === '2024-25' && saleDate112A && saleDate112A >= new Date('2024-07-23')) ? 0.125 : 0.10;
+                            if (financialYear === '2025-26') {
+                                rate112A = 0.125;
+                            }
+                        }
+                        taxOnLTCG112A_thresh = Math.max(0, (initialLTCG112A_TaxableGain - threshold112A)) * rate112A;
+                    }
+
+                    let taxOnSTCG111A_thresh = 0;
+                    if (initialSTCG111A_TaxableGain > 0) {
+                        const saleDate111A = this.inputs.cg.stcg111a.dateSale ? new Date(this.inputs.cg.stcg111a.dateSale) : null;
+                        let rate111A = 0.15;
+                        if (financialYear === '2024-25') {
+                            rate111A = saleDate111A && saleDate111A >= new Date('2024-07-23') ? 0.20 : 0.15;
+                        } else if (financialYear === '2025-26') {
+                            rate111A = 0.20;
+                        }
+                        taxOnSTCG111A_thresh = initialSTCG111A_TaxableGain * rate111A;
+                    }
+
+                    let taxOnLTCG112_thresh = 0;
+                    if (initialLTCG112_TaxableGain > 0) {
+                        const saleDate112 = this.inputs.cg.ltcg112.dateSale ? new Date(this.inputs.cg.ltcg112.dateSale) : null;
+                        const acqDate112 = this.inputs.cg.ltcg112.dateAcquisition ? new Date(this.inputs.cg.ltcg112.dateAcquisition) : null;
+                        let rate112 = 0.20;
+                        if (financialYear === '2024-25') {
+                            if (saleDate112 && saleDate112 >= new Date('2024-07-23')) {
+                                if (this.inputs.cg.ltcg112.assetType === 'land_building' && acqDate112 && acqDate112 <= new Date('2024-07-22')) {
+                                    rate112 = this.inputs.cg.ltcg112.useIndexedCost ? 0.20 : 0.125;
+                                } else {
+                                    rate112 = 0.125;
+                                }
+                            } else {
+                                rate112 = 0.20;
+                            }
+                        } else if (financialYear === '2025-26') {
+                            rate112 = 0.125;
+                        } else {
+                            rate112 = 0.20;
+                        }
+                        taxOnLTCG112_thresh = initialLTCG112_TaxableGain * rate112;
+                    }
+                    let taxOnLottery_thresh = lottery * 0.30;
+
+                    let totalTaxBeforeSurcharge = taxOnNormal + taxOnLTCG112A_thresh + taxOnSTCG111A_thresh + taxOnLTCG112_thresh + taxOnLottery_thresh;
+
+                    let surcharge_thresh = 0;
+                    if (thresholdIncome > 5000000) {
+                        let generalSurchargeRate = 0;
+                        if (thresholdIncome > 50000000) {
+                            generalSurchargeRate = (regime === 'new' && financialYear >= '2023-24') ? 0.25 : 0.37;
+                        } else if (thresholdIncome > 20000000) {
+                            generalSurchargeRate = 0.25;
+                        } else if (thresholdIncome > 10000000) {
+                            generalSurchargeRate = 0.15;
+                        } else if (thresholdIncome > 5000000) {
+                            generalSurchargeRate = 0.10;
+                        }
+
+                        const taxOnCapitalGainsSubjectTo15PercentSurcharge_thresh = taxOnLTCG112A_thresh + taxOnSTCG111A_thresh + taxOnLTCG112_thresh;
+                        const surchargeOnCapitalGains_thresh = taxOnCapitalGainsSubjectTo15PercentSurcharge_thresh * Math.min(generalSurchargeRate, 0.15);
+
+                        let taxAttributableToDividend_thresh = 0;
+                        const normalIncomeForSlabExcludingDividend_thresh = normalIncomeAtThreshold - dividend;
+                        const taxOnNormalIncomeExcludingDividend_thresh = this.calculateTaxOnNormalIncome(normalIncomeForSlabExcludingDividend_thresh, regime, age, financialYear, residentialStatus);
+                        taxAttributableToDividend_thresh = Math.max(0, taxOnNormal - taxOnNormalIncomeExcludingDividend_thresh);
+                        
+                        const surchargeOnDividend_thresh = taxAttributableToDividend_thresh * Math.min(generalSurchargeRate, 0.15);
+
+                        const taxOnRemainingNormalIncome_thresh = taxOnNormal - taxAttributableToDividend_thresh;
+                        const surchargeOnRemainingNormalIncome_thresh = taxOnRemainingNormalIncome_thresh * generalSurchargeRate;
+                        
+                        surcharge_thresh = surchargeOnCapitalGains_thresh + surchargeOnDividend_thresh + surchargeOnRemainingNormalIncome_thresh;
+                    }
+                    return { taxPlusSurcharge: totalTaxBeforeSurcharge + surcharge_thresh };
+                },
             }));
         });
 
@@ -1161,14 +1253,15 @@
         }
 
         const SLABS_BY_YEAR = {
-            '2025-26': { // Based on Finance Act 2024 (AY 2026-27)
+            '2025-26': { // Custom slabs for FY 2025-26 New Regime
                 'new': [
                     { limit: 400000, rate: 0 },
                     { limit: 800000, rate: 0.05 },
                     { limit: 1200000, rate: 0.10 },
                     { limit: 1600000, rate: 0.15 },
                     { limit: 2000000, rate: 0.20 },
-                    { limit: 2400000, rate: 0.25, rate_overflow: 0.30 } // 20-24L @ 25%, above 24L @ 30%
+                    { limit: 2400000, rate: 0.25 },
+                    { limit: Infinity, rate_overflow: 0.30 } // Above 24L
                 ],
                 'old': { // Assuming old regime slabs remain same as 2024-25 as per memo
                     'below60': [
@@ -1187,11 +1280,11 @@
                     ]
                 }
             },
-            '2024-25': { // As per Finance Act 2024 (AY 2025-26)
+            '2024-25': { // As per Finance Act 2024 (AY 2025-26) PDF
                 'new': [
                     { limit: 300000, rate: 0 },
-                    { limit: 700000, rate: 0.05 }, // Updated as per user input
-                    { limit: 1000000, rate: 0.10 }, // Updated as per user input
+                    { limit: 700000, rate: 0.05 },
+                    { limit: 1000000, rate: 0.10 },
                     { limit: 1200000, rate: 0.15 },
                     { limit: 1500000, rate: 0.20, rate_overflow: 0.30 }
                 ],
@@ -1267,7 +1360,7 @@
 
         const REBATE_87A_LIMITS = {
             '2025-26': { // Based on Finance Act 2024 (AY 2026-27)
-                'new': { incomeThreshold: 1200000, amount: 60000 },
+                'new': { incomeThreshold: 700000, amount: 25000 },
                 'old': { incomeThreshold: 500000, amount: 12500 } 
             },
             '2024-25': { // Based on Finance Act 2023 (AY 2024-25)
@@ -1279,7 +1372,7 @@
                 'old': { incomeThreshold: 500000, amount: 12500 }
             },
             '2022-23': { // Based on Finance Act 2020 (AY 2023-24)
-                'new': { incomeThreshold: 500000, amount: 12500 }, // Rebate was 12500 for income upto 5L in new regime
+                'new': { incomeThreshold: 500000, amount: 12500 },
                 'old': { incomeThreshold: 500000, amount: 12500 }
             }
         };

@@ -380,35 +380,51 @@
 
             <div x-data="{ open: false }" class="p-6 bg-stone-50 rounded-lg shadow">
                 <button @click="open = !open" class="w-full flex justify-between items-center text-left text-xl font-semibold text-teal-600 mb-2">
-                    7. Tax Paid Details
+                    7. Tax Paid Details & Interest
                     <span x-text="open ? '−' : '+'" class="text-2xl"></span>
                 </button>
                 <div x-show="open" x-cloak x-transition class="mt-4 space-y-4 border-t pt-4">
-                    <p class="text-sm text-stone-600 mb-4">Enter any tax already paid via TDS or Advance Tax.</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-stone-700 mb-1">TDS (Tax Deducted at Source)</label>
-                            <input type="number" x-model.number="inputs.taxPaid.tds.q1" @input="calculateAllTaxes" placeholder="Q1 (Apr-Jun)" class="w-full p-2 border rounded text-sm mb-2">
-                            <input type="number" x-model.number="inputs.taxPaid.tds.q2" @input="calculateAllTaxes" placeholder="Q2 (Jul-Sep)" class="w-full p-2 border rounded text-sm mb-2">
-                            <input type="number" x-model.number="inputs.taxPaid.tds.q3" @input="calculateAllTaxes" placeholder="Q3 (Oct-Dec)" class="w-full p-2 border rounded text-sm mb-2">
-                            <input type="number" x-model.number="inputs.taxPaid.tds.q4" @input="calculateAllTaxes" placeholder="Q4 (Jan-Mar)" class="w-full p-2 border rounded text-sm">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-stone-700 mb-1">Advance Tax Paid</label>
-                            <input type="number" x-model.number="inputs.taxPaid.advanceTax.q1" @input="calculateAllTaxes" placeholder="Q1 (by Jun 15)" class="w-full p-2 border rounded text-sm mb-2">
-                            <input type="number" x-model.number="inputs.taxPaid.advanceTax.q2" @input="calculateAllTaxes" placeholder="Q2 (by Sep 15)" class="w-full p-2 border rounded text-sm mb-2">
-                            <input type="number" x-model.number="inputs.taxPaid.advanceTax.q3" @input="calculateAllTaxes" placeholder="Q3 (by Dec 15)" class="w-full p-2 border rounded text-sm mb-2">
-                            <input type="number" x-model.number="inputs.taxPaid.advanceTax.q4" @input="calculateAllTaxes" placeholder="Q4 (by Mar 15)" class="w-full p-2 border rounded text-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-3">
+                            <input type="checkbox" id="enableTaxPaidInterest" x-model="inputs.enableTaxPaidInterest" @change="calculateAllTaxes" class="h-5 w-5 text-teal-600 border-stone-300 rounded focus:ring-teal-500">
+                            <label for="enableTaxPaidInterest" class="text-sm font-medium text-stone-700">Enable Tax Paid & Interest Calculation (234B / 234C)</label>
                         </div>
                     </div>
-                    <div class="mt-4">
-                        <label class="block text-sm font-medium text-stone-700 mb-1">Date of Tax Payment / ITR Filing (for interest calculation)</label>
-                        <input type="date" x-model="inputs.taxPaid.paymentDate" @input="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md">
-                        <div class="info-icon text-xs text-stone-500 mt-1">
-                            ℹ Date of Payment: 
-                            <span class="info-tooltip">
-                                This date is used for calculating interest under Section 234B. If tax is paid after March 31st of the financial year, interest is calculated up to this date. If no date is entered, interest is calculated up to July 31st (the typical due date for ITR filing for individuals).
-                            </span>
+                    <div x-show="!inputs.enableTaxPaidInterest" class="p-3 bg-amber-50 border border-amber-300 rounded-md flex items-start space-x-2">
+                        <span class="text-amber-600 text-lg">⚠</span>
+                        <p class="text-sm text-amber-700"><strong>Interest calculation is disabled.</strong> TDS, Advance Tax, and Interest u/s 234B & 234C will not be computed. Enable the checkbox above to include these in the output.</p>
+                    </div>
+                    <div x-show="inputs.enableTaxPaidInterest" class="p-3 bg-blue-50 border border-blue-200 rounded-md flex items-start space-x-2">
+                        <span class="text-blue-500 text-lg">ℹ</span>
+                        <p class="text-sm text-blue-700">Interest u/s 234B & 234C will be calculated based on shortfall in tax payments. Enter TDS and Advance Tax details below.</p>
+                    </div>
+                    <div x-show="inputs.enableTaxPaidInterest" x-transition>
+                        <p class="text-sm text-stone-600 mb-4">Enter any tax already paid via TDS or Advance Tax.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-stone-700 mb-1">TDS (Tax Deducted at Source)</label>
+                                <input type="number" x-model.number="inputs.taxPaid.tds.q1" @input="calculateAllTaxes" placeholder="Q1 (Apr-Jun)" class="w-full p-2 border rounded text-sm mb-2">
+                                <input type="number" x-model.number="inputs.taxPaid.tds.q2" @input="calculateAllTaxes" placeholder="Q2 (Jul-Sep)" class="w-full p-2 border rounded text-sm mb-2">
+                                <input type="number" x-model.number="inputs.taxPaid.tds.q3" @input="calculateAllTaxes" placeholder="Q3 (Oct-Dec)" class="w-full p-2 border rounded text-sm mb-2">
+                                <input type="number" x-model.number="inputs.taxPaid.tds.q4" @input="calculateAllTaxes" placeholder="Q4 (Jan-Mar)" class="w-full p-2 border rounded text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-stone-700 mb-1">Advance Tax Paid</label>
+                                <input type="number" x-model.number="inputs.taxPaid.advanceTax.q1" @input="calculateAllTaxes" placeholder="Q1 (by Jun 15)" class="w-full p-2 border rounded text-sm mb-2">
+                                <input type="number" x-model.number="inputs.taxPaid.advanceTax.q2" @input="calculateAllTaxes" placeholder="Q2 (by Sep 15)" class="w-full p-2 border rounded text-sm mb-2">
+                                <input type="number" x-model.number="inputs.taxPaid.advanceTax.q3" @input="calculateAllTaxes" placeholder="Q3 (by Dec 15)" class="w-full p-2 border rounded text-sm mb-2">
+                                <input type="number" x-model.number="inputs.taxPaid.advanceTax.q4" @input="calculateAllTaxes" placeholder="Q4 (by Mar 15)" class="w-full p-2 border rounded text-sm">
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <label class="block text-sm font-medium text-stone-700 mb-1">Date of Tax Payment / ITR Filing (for interest calculation)</label>
+                            <input type="date" x-model="inputs.taxPaid.paymentDate" @input="calculateAllTaxes" class="w-full p-2 border border-stone-300 rounded-md">
+                            <div class="info-icon text-xs text-stone-500 mt-1">
+                                ℹ Date of Payment: 
+                                <span class="info-tooltip">
+                                    This date is used for calculating interest under Section 234B. If tax is paid after March 31st of the financial year, interest is calculated up to this date. If no date is entered, interest is calculated up to July 31st (the typical due date for ITR filing for individuals).
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -510,6 +526,7 @@
                     ],
                     deductions80CCD1B: 0,
                     deductions80CCD2: 0,
+                    enableTaxPaidInterest: false, // Toggle for tax paid & interest calculation
                     taxPaid: {
                         tds: { q1: 0, q2: 0, q3: 0, q4: 0 },
                         advanceTax: { q1: 0, q2: 0, q3: 0, q4: 0 },
@@ -970,14 +987,22 @@
                         const rebateLimit = REBATE_87A_LIMITS[financialYear][regime];
                         const incomeForRebateEligibility = totalTaxableIncome - currentLTCG112A_TaxableGain - currentSTCG111A_TaxableGain - currentLTCG112_TaxableGain - lottery;
                         
-                        if (incomeForRebateEligibility <= rebateLimit.incomeThreshold) { // Income <= 7 Lacs
+                        if (incomeForRebateEligibility <= rebateLimit.incomeThreshold) {
+                            // Income within threshold — full rebate (capped at max amount)
                             rebate87A = Math.min(taxOnNormalIncome, rebateLimit.amount);
-                        } else if (regime === 'new' && incomeForRebateEligibility > rebateLimit.incomeThreshold) { // New Regime, Income > 7 Lacs
-                            // "Relief is of an amount equal to the amount by Income tax (-) Income in excess of 7 lacs"
-                            const hypotheticalTaxPayable = taxOnNormalIncome - (incomeForRebateEligibility - rebateLimit.incomeThreshold);
-                            rebate87A = Math.max(0, taxOnNormalIncome - hypotheticalTaxPayable);
-                            rebate87A = Math.min(rebate87A, rebateLimit.amount); // Cap at 25000
+                        } else if (regime === 'new') {
+                            // New Regime marginal relief: only applies in a narrow band above threshold
+                            // Tax payable should not exceed the income in excess of the threshold
+                            const excessIncome = incomeForRebateEligibility - rebateLimit.incomeThreshold;
+                            if (taxOnNormalIncome > excessIncome) {
+                                // Marginal relief: reduce tax so it doesn't exceed the excess income
+                                rebate87A = Math.min(taxOnNormalIncome - excessIncome, rebateLimit.amount);
+                            } else {
+                                // Income well above threshold — no rebate
+                                rebate87A = 0;
+                            }
                         }
+                        // Old Regime: no marginal relief — rebate only if income <= threshold
                     }
                     
                     let taxOnNormalIncomeAfterRebate = Math.max(0, taxOnNormalIncome - rebate87A);
@@ -1065,60 +1090,65 @@
                     let cess = taxPlusSurcharge * 0.04;
                     let finalTaxLiability = Math.round((taxPlusSurcharge + cess)/10)*10;
 
-                    // --- TDS & Advance Tax ---
-                    const totalTDSPaid = (taxPaid.tds.q1 || 0) + (taxPaid.tds.q2 || 0) + (taxPaid.tds.q3 || 0) + (taxPaid.tds.q4 || 0);
-                    const totalAdvanceTaxPaid = (taxPaid.advanceTax.q1 || 0) + (taxPaid.advanceTax.q2 || 0) + (taxPaid.advanceTax.q3 || 0) + (taxPaid.advanceTax.q4 || 0);
+                    // --- TDS & Advance Tax (only if enabled) ---
+                    const isTaxPaidEnabled = this.inputs.enableTaxPaidInterest;
+                    const totalTDSPaid = isTaxPaidEnabled ? (taxPaid.tds.q1 || 0) + (taxPaid.tds.q2 || 0) + (taxPaid.tds.q3 || 0) + (taxPaid.tds.q4 || 0) : 0;
+                    const totalAdvanceTaxPaid = isTaxPaidEnabled ? (taxPaid.advanceTax.q1 || 0) + (taxPaid.advanceTax.q2 || 0) + (taxPaid.advanceTax.q3 || 0) + (taxPaid.advanceTax.q4 || 0) : 0;
                     const totalTaxPaid = totalTDSPaid + totalAdvanceTaxPaid;
                     
                     let netTaxPayableRefund = finalTaxLiability - totalTaxPaid;
 
-                    // --- Interest u/s 234B ---
+                    // --- Interest u/s 234B (only if enabled) ---
                     let interest234B = 0;
-                    const advanceTaxThreshold = finalTaxLiability * 0.90;
-                    const netTaxAfterTDS = finalTaxLiability - totalTDSPaid;
+                    if (isTaxPaidEnabled) {
+                        const advanceTaxThreshold = finalTaxLiability * 0.90;
+                        const netTaxAfterTDS = finalTaxLiability - totalTDSPaid;
 
-                    if (totalAdvanceTaxPaid < advanceTaxThreshold) {
-                        const shortfall = Math.max(0, netTaxAfterTDS - totalAdvanceTaxPaid);
-                        if (shortfall > 0) {
-                            let assessmentYear = parseInt(financialYear.substring(0, 4)) + 1;
-                            let interestStartDate = new Date(`${assessmentYear}-04-01`);
-                            let interestEndDate;
+                        if (totalAdvanceTaxPaid < advanceTaxThreshold) {
+                            const shortfall = Math.max(0, netTaxAfterTDS - totalAdvanceTaxPaid);
+                            if (shortfall > 0) {
+                                let assessmentYear = parseInt(financialYear.substring(0, 4)) + 1;
+                                let interestStartDate = new Date(`${assessmentYear}-04-01`);
+                                let interestEndDate;
 
-                            if (taxPaid.paymentDate) {
-                                interestEndDate = new Date(taxPaid.paymentDate);
-                            } else {
-                                interestEndDate = new Date(`${assessmentYear}-07-31`);
-                            }
+                                if (taxPaid.paymentDate) {
+                                    interestEndDate = new Date(taxPaid.paymentDate);
+                                } else {
+                                    interestEndDate = new Date(`${assessmentYear}-07-31`);
+                                }
 
-                            if (interestEndDate > interestStartDate) {
-                                const diffTime = interestEndDate.getTime() - interestStartDate.getTime();
-                                const diffMonths = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 30.4375));
-                                interest234B = Math.round(shortfall * 0.01 * diffMonths);
+                                if (interestEndDate > interestStartDate) {
+                                    const diffTime = interestEndDate.getTime() - interestStartDate.getTime();
+                                    const diffMonths = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 30.4375));
+                                    interest234B = Math.round(shortfall * 0.01 * diffMonths);
+                                }
                             }
                         }
                     }
 
-                    // --- Interest u/s 234C ---
+                    // --- Interest u/s 234C (only if enabled) ---
                     let interest234C = 0;
-                    const advanceTaxDueDates = [
-                        { date: new Date(parseInt(financialYear.substring(0, 4)), 5, 15), percentage: 0.15, q_tds: taxPaid.tds.q1 || 0, q_at: taxPaid.advanceTax.q1 || 0 },
-                        { date: new Date(parseInt(financialYear.substring(0, 4)), 8, 15), percentage: 0.45, q_tds: (taxPaid.tds.q1 || 0) + (taxPaid.tds.q2 || 0), q_at: (taxPaid.advanceTax.q1 || 0) + (taxPaid.advanceTax.q2 || 0) },
-                        { date: new Date(parseInt(financialYear.substring(0, 4)), 11, 15), percentage: 0.75, q_tds: (taxPaid.tds.q1 || 0) + (taxPaid.tds.q2 || 0) + (taxPaid.tds.q3 || 0), q_at: (taxPaid.advanceTax.q1 || 0) + (taxPaid.advanceTax.q2 || 0) + (taxPaid.advanceTax.q3 || 0) },
-                        { date: new Date(parseInt(financialYear.substring(0, 4)) + 1, 2, 15), percentage: 1.00, q_tds: (taxPaid.tds.q1 || 0) + (taxPaid.tds.q2 || 0) + (taxPaid.tds.q3 || 0) + (taxPaid.tds.q4 || 0), q_at: (taxPaid.advanceTax.q1 || 0) + (taxPaid.advanceTax.q2 || 0) + (taxPaid.advanceTax.q3 || 0) + (taxPaid.advanceTax.q4 || 0) }
-                    ];
+                    if (isTaxPaidEnabled) {
+                        const advanceTaxDueDates = [
+                            { date: new Date(parseInt(financialYear.substring(0, 4)), 5, 15), percentage: 0.15, q_tds: taxPaid.tds.q1 || 0, q_at: taxPaid.advanceTax.q1 || 0 },
+                            { date: new Date(parseInt(financialYear.substring(0, 4)), 8, 15), percentage: 0.45, q_tds: (taxPaid.tds.q1 || 0) + (taxPaid.tds.q2 || 0), q_at: (taxPaid.advanceTax.q1 || 0) + (taxPaid.advanceTax.q2 || 0) },
+                            { date: new Date(parseInt(financialYear.substring(0, 4)), 11, 15), percentage: 0.75, q_tds: (taxPaid.tds.q1 || 0) + (taxPaid.tds.q2 || 0) + (taxPaid.tds.q3 || 0), q_at: (taxPaid.advanceTax.q1 || 0) + (taxPaid.advanceTax.q2 || 0) + (taxPaid.advanceTax.q3 || 0) },
+                            { date: new Date(parseInt(financialYear.substring(0, 4)) + 1, 2, 15), percentage: 1.00, q_tds: (taxPaid.tds.q1 || 0) + (taxPaid.tds.q2 || 0) + (taxPaid.tds.q3 || 0) + (taxPaid.tds.q4 || 0), q_at: (taxPaid.advanceTax.q1 || 0) + (taxPaid.advanceTax.q2 || 0) + (taxPaid.advanceTax.q3 || 0) + (taxPaid.advanceTax.q4 || 0) }
+                        ];
 
-                    for (let i = 0; i < advanceTaxDueDates.length; i++) {
-                        const dueDateInfo = advanceTaxDueDates[i];
-                        const requiredAdvanceTax = finalTaxLiability * dueDateInfo.percentage;
-                        const taxPaidTillDate = dueDateInfo.q_tds + dueDateInfo.q_at;
-                        
-                        if (taxPaidTillDate < requiredAdvanceTax) {
-                            let shortfall = requiredAdvanceTax - taxPaidTillDate;
-                            let interestMonths = 3; 
-                            if (i === 3) {
-                                interestMonths = 1; 
+                        for (let i = 0; i < advanceTaxDueDates.length; i++) {
+                            const dueDateInfo = advanceTaxDueDates[i];
+                            const requiredAdvanceTax = finalTaxLiability * dueDateInfo.percentage;
+                            const taxPaidTillDate = dueDateInfo.q_tds + dueDateInfo.q_at;
+                            
+                            if (taxPaidTillDate < requiredAdvanceTax) {
+                                let shortfall = requiredAdvanceTax - taxPaidTillDate;
+                                let interestMonths = 3; 
+                                if (i === 3) {
+                                    interestMonths = 1; 
+                                }
+                                interest234C += Math.round(shortfall * 0.01 * interestMonths);
                             }
-                            interest234C += Math.round(shortfall * 0.01 * interestMonths);
                         }
                     }
                     
@@ -1459,8 +1489,8 @@
         };
 
         const REBATE_87A_LIMITS = {
-            '2025-26': { // Based on Finance Act 2024 (AY 2026-27)
-                'new': { incomeThreshold: 700000, amount: 25000 },
+            '2025-26': { // Based on Finance Act 2025 (AY 2026-27)
+                'new': { incomeThreshold: 1200000, amount: 60000 },
                 'old': { incomeThreshold: 500000, amount: 12500 } 
             },
             '2024-25': { // Based on Finance Act 2023 (AY 2024-25)
